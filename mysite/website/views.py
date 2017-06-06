@@ -1,0 +1,42 @@
+from django.shortcuts import render, render_to_response
+from django.http import HttpResponse
+from django.template import RequestContext, loader
+
+
+
+
+# Create your views here.
+def index(request):
+	return render(request, 'website/index.html')
+
+def registrar(request):
+	return render(request, 'website/registrar.html')
+
+def login(request):
+	#aca se procesará la solicitud de login.
+	return render(request, 'website/index.html')
+
+def contacto(request):
+	return render(request, 'website/contacto.html')
+
+def descargas(request):
+	return render(request, 'website/descargas.html')
+
+def informacion(request):
+	return render(request, 'website/informacion.html')
+
+def pedir_asesoria(request):
+	return render(request, 'website/pedir_asesoria.html')
+
+def sugerencia(request):
+	return render(request, 'website/sugerencia.html')
+
+def administrar_descargas(request):
+	return render(request, 'website/administrar_descargas.html')
+
+def administrar_solicitudes(request):
+	return render(request, 'website/administrar_solicitudes.html')
+
+def administrar_informacion(request):
+	return render(request, 'website/administrar_informacion.html')
+

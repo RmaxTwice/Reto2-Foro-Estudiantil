@@ -24,10 +24,25 @@
             <a href="/informacion" class="left menu-link">Informaci&oacute;n</a>
             <a href="/pedir_asesoria" class="left menu-link">Asesoramiento</a>
             <a href="/sugerencia" class="left menu-link">Sugerencias</a>
-            <a href="/registrar" class="right menu-link">Registrarse</a>
-            <a href="#" class="right menu-link" id="login_btn" onclick="document.getElementById('login_modal').style.display='block'">Iniciar Sesión</a>
             <a href="javascript:void(0);" class="icon" >&#9776;</a>
-
+            <div class="clipfix">
+            <ul class="nav navbar-nav pull-right nav-menu-options">
+                <li><img src=" {% static 'website/img/avatar.gif' %}" class="nav-avatar"></li>
+                <li><h4 class="user-name">Usuario</h4></li>
+                <li class = "user-options-menu">
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-menu-down"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="menu-link" href="/perfil/{{ current_user.username }}">Mi Perfil <span class="glyphicon glyphicon-user"></span></a></li>
+                            <li><a class="menu-link" href="/logout">Cerrar Sesi&oacute;n <span class="glyphicon glyphicon-log-out"></span></a></li>
+                        </ul>
+                    </div>
+                </li>
+    
+            </ul>
+            </div>
             <!--
             <ul>
                 <li class="brand"><a href="/"><h4> Forum-Estudiantil </h4></a></li>

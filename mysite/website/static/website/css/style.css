@@ -22,7 +22,6 @@ nav.topnav{
     border-bottom: 1px solid #999;
     padding: 5px 0;
     z-index: 9;
-    overflow: hidden;
 }
 
 .topnav a {
@@ -85,6 +84,23 @@ nav a.icon:hover{
     font-family: 'Raleway', sans-serif;
 
 */
+
+.nav-avatar{
+    height: 50px;
+    width: 50px;
+    margin-right: 10px;
+
+}
+
+nav h4{
+    margin-right: 15px;
+    padding-top: 5px; 
+}
+
+.dropdown-menu{
+    top: 52px;
+    left: -98px;
+}
 /* Media queries para lograr responsividad en la barra de navegacion del tope*/
 @media screen and (max-width: 900px) {
 
@@ -153,6 +169,7 @@ div.login_box{
 .twt-btn{
     margin-bottom: 20px;
 }
+
 
 /*---------------  HEADER PRINCIPAL  ---------------*/
 

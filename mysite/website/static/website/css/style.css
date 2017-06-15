@@ -101,6 +101,16 @@ nav h4{
     top: 52px;
     left: -98px;
 }
+
+.dropdown-menu.admin{
+    top: 52px;
+    left: -149px;
+}
+
+.dropdown-menu a{
+    padding: 5px 0;
+    text-align: left;
+}
 /* Media queries para lograr responsividad en la barra de navegacion del tope*/
 @media screen and (max-width: 900px) {
 

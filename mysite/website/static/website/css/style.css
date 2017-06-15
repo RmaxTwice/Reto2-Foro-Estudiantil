@@ -118,6 +118,41 @@ nav a.icon:hover{
     }
 
 }
+/*---------------  MODAL DE INICIO DE SESION  ---------------*/
+div.modal{
+    display: none; 
+    position: fixed; 
+    z-index: 10; 
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+    padding-top: 60px;
+}
+
+div.login_box{
+    background-color: #DDD;
+    width: 400px;
+    padding: 30px 15px;
+    border-radius: 10px;
+}
+
+.close {
+    position: relative;
+    right: 25px;
+    top: -25px;
+    left: 10px;
+    color: #000;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.twt-btn{
+    margin-bottom: 20px;
+}
 
 /*---------------  HEADER PRINCIPAL  ---------------*/
 
@@ -219,7 +254,6 @@ section button{
     border: 0 none;
     font-weight: 700;
     letter-spacing: 1px;
-    text-transform: uppercase;
 }
  
 .btn:focus, .btn:active:focus, .btn.active:focus {

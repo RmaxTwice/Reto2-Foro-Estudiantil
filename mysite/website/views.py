@@ -34,6 +34,9 @@ def informacion(request):
 def pedir_asesoria(request):
 	return render(request, 'website/pedir_asesoria.html')
 
+def perfil(request):
+	return render(request, 'website/perfil.html')
+
 def sugerencia(request):
 	return render(request, 'website/sugerencia.html')
 

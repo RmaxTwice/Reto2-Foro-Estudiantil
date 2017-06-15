@@ -4,8 +4,64 @@
 
 	<h1> Registrarse </h1>
 
-	<div class="well ">
-		
-	</div>
+	
+		<div class="container main-container">
+			<div class="row login-form">
+                <div class="col-md-10 col-md-offset-1">
+                    <form method="post" action="">
+                        <fieldset>
+                            <legend>Datos de la Cuenta (Obligatorios)</legend>
+                            <div class="form-group">
+                                <label>Correo electr&oacute;nico:</label>
+                                <input type="email" class="form-control" name="email" placeholder="hello123@email.com" required>
+                            </div>
+                            <div class="form-group">    
+                                <label>Nombre de Usuario:</label>
+                                <input type="text" class="form-control" name="username" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="">Contraseña:</label>
+                                <input type="password" class="form-control" name="pass" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="">Confirmar contraseña:</label>
+                                <input type="password" class="form-control" name="passcomf" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="">Facultad:</label><br>
+                                <select name ="facultad">
+									<option value="Ciencias">Ciencias</option>
+									<option value="Ingenieria">Ingenier&iacute;a</option>
+									<option value="Medicina">Medicina</option>
+									<option value="Derecho">Derecho</option>
+								</select> 
+                            </div>
+
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Datos Personales (Opcionales)</legend>
+                            <div class="form-group">
+                                <label>Nombre:</label>
+                                <input type="text" name="name" class="form-control" >
+                            </div>
+                            <div class="form-group">
+                                <label>Apellido:</label>
+                                <input type="text" name="lastname" class="form-control" >
+                            </div>
+                        </fieldset>
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+                                <button type="submit" class="btn btn-success btn-lg btn-block submit-btn">Registrar</button>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+			</div>
+		</div>
 
 {% endblock %}

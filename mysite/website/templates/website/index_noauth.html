@@ -1,0 +1,94 @@
+{% extends 'website/base.html' %}
+{% load static %}
+{% block content %}
+
+        <!-----------------  Header Principal  ------------------>
+        <div id="header-principal">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-2 col-md-7 col-xl-7 col-lg-7 ">
+                        <img class="main-banner hidden-xs hidden-sm img-responsive" src="{% static 'website/img/main-banner.jpg' %}"> 
+                    </div>
+                    <div class="col-sm-8 col-md-5 col-xl-5 col-lg-5 text-center">
+                        <p>Los mejores recursos estudiantiles solo a un click de distancia.</p>
+                        <button id="btn-unirse" class=" btn btn-primary outline">¡Unirse ya!</button>
+                    </div>
+                </div>
+            </div>
+            <!--
+            <img class="main-banner" src="img/main-banner.jpg">
+            <p>Los mejores recursos estudiantiles solo a un click de distancia.</p>
+            <button>Unirse ya!</button>
+            -->
+        </div>
+        <div class="relleno"></div>
+        <!-----------------  Secciones del portal web  ------------------>
+        
+        <h1>Servicios</h1>
+        <section id="promo-descargas">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- Aca van las clases de bootstrap que ayudan a generar responsividad-->
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        <img src="{% static 'website/img/Study-Material1.jpg' %}"  class="hidden-xs img-section img-responsive" alt = "monton de libros abiertos y apilados">
+                    </div>
+                    <div class="col-md-8 col-lg-8 col-xl-8 text-center">
+                        <p>
+                            En esta secci&oacute;n podras encontrar diversos materiales de estudio de diferentes asignaturas
+                            como guias, talleres, laboratorios, libros y m&aacute;s!
+                        </p>
+                         <button class="btn btn-primary outline"> Descargas <span class="big-icon glyphicon glyphicon-download-alt"></span></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="promo-info">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        <img src=" {% static 'website/img/Calendar_Web_519.png' %}" class="hidden-xs img-section img-responsive" alt="calendarios con fechas importantes">
+                    </div>
+                    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 text-center">
+                        <p>
+                            Accede ahora y podr&aacute;s obtener la informaci&oacute;n m&aacute;s detallada y actualizada 
+                            sobre tesis, pasant&iacute;as, servicio comunitario y m&aacute;s!
+                        </p>
+                        <button class="btn btn-warning outline"> Informaci&oacute;n <span class="big-icon glyphicon glyphicon-info-sign"></span></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="promo-asesoramiento">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        <img src="{% static 'website/img/online-asesoramiento.png' %}"  class="hidden-xs img-section img-responsive" alt = "Pareja de estudiantes es asesorada por un profesor">
+                    </div>
+                    <div class="col-md-8 col-lg-8 col-xl-8 text-center">
+                        <p>
+                            ¿Tienes dudas o preguntas sobre materias o algun proceso universitario? En esta secci&oacute;n podremos ayudarte a encontrar la respuesta que buscas.
+                        </p>
+                        <button class="btn btn-primary outline"> Asesoramiento <span class="big-icon glyphicon glyphicon-education"></span></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="promo-info">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        <img src="{% static 'website/img/sugerencias.gif' %}" class="hidden-xs img-section img-responsive" alt="personas de diferentes colores con sugerencias sobre sus cabezas">
+                    </div>
+                    <div class="col-md-8 col-lg-8 col-xl-8 text-center">
+                        <p>
+                            Ayudanos a mejorar, estamos siempre abiertos a escuchar sugerencias, haz escuchar tu voz!
+                        </p>
+                        <button class="btn btn-warning outline"> Sugerencias <span class="big-icon glyphicon glyphicon-pencil"></span></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock %}

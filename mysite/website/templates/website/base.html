@@ -20,12 +20,12 @@
         <!-----------------  Barra de Navegacion  ------------------>
         <nav id="myTopnav" class="topnav">
             <a href="/" class="left brand"><strong>Forum-Estudiantil</strong></a>
-            <a href="/descargas" class="left menu-link">Descargas</a>
-            <a href="/informacion" class="left menu-link">Informaci&oacute;n</a>
-            <a href="/pedir_asesoria" class="left menu-link">Asesoramiento</a>
-            <a href="/sugerencia" class="left menu-link">Sugerencias</a>
+            <a href="#"  onclick="document.getElementById('login_modal').style.display='block'" class="left menu-link">Descargas</a>
+            <a href="#"  onclick="document.getElementById('login_modal').style.display='block'" class="left menu-link">Informaci&oacute;n</a>
+            <a href="#"  onclick="document.getElementById('login_modal').style.display='block'" class="left menu-link">Asesoramiento</a>
+            <a href="#"  onclick="document.getElementById('login_modal').style.display='block'" class="left menu-link">Sugerencias</a>
             <a href="/registrar" class="right menu-link">Registrarse</a>
-            <a href="#" class="right menu-link" id="login_btn" onclick="document.getElementById('login_modal').style.display='block'">Iniciar Sesión</a>
+            <a href="#" class="right menu-link" id="login_btn" onclick="document.getElementById('login_modal').style.display='block'" >Iniciar Sesión</a>
             <a href="javascript:void(0);" class="icon" >&#9776;</a>
 
             <!--
@@ -86,7 +86,7 @@ class="close" title="Close Modal">&times;</span>
 
                 <div class="row login-form">
                 <div class="col-md-12">
-                    <form action="/logmein" method="POST">
+                    <form action="/indexu/" >
                         <div class="form-group">
                             <label>Nombre de Usuario</label>
                             <input type="text" placeholder="Igrese su Usuario" class="form-control" name="username" required>

@@ -7,7 +7,13 @@ from django.template import RequestContext, loader
 
 # Create your views here.
 def index(request):
-	return render(request, 'website/index.html')
+	return render(request, 'website/index_noauth.html')
+
+def logmein(request):
+	return render(request, 'website/index_user.html')
+
+def adminview(request):
+	return render(request, 'website/index_user_admin.html')
 
 def registrar(request):
 	return render(request, 'website/registrar.html')

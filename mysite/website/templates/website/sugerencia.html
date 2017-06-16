@@ -3,6 +3,30 @@
 {% block content %}
 
 		<h1> Hacer una Sugerencia </h1>
-		<div class="well "></div>
+		<div class="container main-container">
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<form>
+					<fieldset>
+	                	<legend>Datos de la sugerencia</legend>
+
+	                    <div class="form-group">    
+	                        <label>Tema:</label>
+	                        <input type="text" class="form-control" name="tema" required>
+	                    </div>
+	                    <div class="form-group">
+	                        <label>Sugerencia:</label><br>
+	                        <textarea id="mensaje" name="mensaje" placeholder="Escriba su mensaje aqu&iacute;.." style="height:200px; width: 100%"></textarea>
+	                    </div>
+	                </fieldset>
+	                <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <button type="submit" class="btn btn-success btn-lg btn-block submit-btn">Enviar</button>
+                        </div>
+                     </div>
+				</form>
+			</div>
+		</div>
+	</div>
 
 {% endblock %}

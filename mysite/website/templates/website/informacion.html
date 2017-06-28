@@ -1,8 +1,91 @@
 {% extends 'website/base_usuario.html' %}
 {% load static %}
 {% block content %}
-
+	<br>
+	<br>
 	<h1> Secci&oacute;n Informativa </h1>
-	<div class="well "></div>
+	<div class="cont-principal">
+		<div class="container">
+			<div class="row">
+				<!-- Aca se coloca una lista de los tags informativos disponibles en la facultad en un futuro de forma dinamica-->
+				
+				<div class="col-md-4 tags">
+					<div class="jumbotron">
+						<h4 class="text-center">Facultad de Ciencias</h4>
+						<hr>
+						<h4 class="text-center">Temas</h4>
+						<ul>
+							<li><a href="">General</a></li>
+							<li><a href="">Tesis</a></li>
+							<li><a href="">Seminario</a></li>
+							<li><a href="">Servicion Comunitario</a></li>
+							<li><a href="">Pasantías</a></li>
+							<li><a href="">Reincorporaciones</a></li>
+						</ul>
+					</div>
+					<button class="btn btn-warning center-block">Ver otra Facultad</button>
+				</div>
+				<div class="col-md-8 posts">
+					<div class="jumbotron">
+						<h2 class="text-center">Noticias Recientes</h2>
+						<!-- Aca van articulos de noticias e informacion creados dinamicamente-->
+						<hr>
+						<article>
+							<h3 class="text-center"> Titulo noticia 1</h3>
+							<br>
+							<span>Tema: 
+								<a href="">General</a>
+							</span>
+							<br><br>
+							<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+							quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+							consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+							cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+							proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+							<span>Fecha de Escrito con Hora</span>
+							
+						</article>
+						<hr>
+						<article>
+							<h3 class="text-center"> Titulo noticia 2</h3>
+							<br>
+							<span>Tema: 
+								<a href="">Tesis</a>
+							</span>
+							<br><br>
+							<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+							quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+							consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+							cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+							proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+							<span>Fecha de Escrito con Hora</span>
+						</article>
+						<hr>
+						<article>
+							<h3 class="text-center"> Titulo noticia 3</h3>
+							<br>
+							<span>Tema: 
+								<a href="">Servicio Comunitario</a>
+							</span>
+							<br><br>
+							<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+							quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+							consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+							cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+							proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+							<span>Fecha de Escrito con Hora</span> <span style="float: right;"></span>
+						</article>
+						
+						
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 {% endblock %}

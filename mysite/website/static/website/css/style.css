@@ -164,7 +164,8 @@ div.modal{
 div.login_box{
     background-color: #eee;
     width: 400px;
-    padding: 30px 15px;
+    padding: 20px 15px;
+
     border-radius: 10px;
 }
 
@@ -180,6 +181,12 @@ div.login_box{
 
 .twt-btn{
     margin-bottom: 20px;
+}
+
+.link-discreto{
+    color: #222;
+    display: block;
+    margin: 10px 0;
 }
 
 
@@ -327,7 +334,8 @@ th {
 
 .btn-primary.outline:active, .btn-primary.outline.active {
 	border-color: #007299;
-	color: #007299;
+	color: #eee;
+    background-color: #007299;
 	box-shadow: none;
 }
 
@@ -341,7 +349,8 @@ th {
 }
 .btn-warning.outline:active, .btn-warning.outline.active {
 	border-color: #b87430;
-	color: #b87430;
+	color: #eee;
+    background-color: #b87430;
 	box-shadow: none;
 }
 
@@ -366,7 +375,36 @@ div.login-form button.submit-btn{
 div.login-form fieldset{
     margin: 30px 0;
 }
+
+/*---------------  Estilo de las secciones de Perfil y Modificacion de perfiles  ---------------*/
+
+.perfil-container{
+    background-color: #fff;
+    width: 80%;
+    border-radius: 5px;
+}
+
+.perfil-container > .jumbotron{
+    background-color: #fff;
+}
+
+.main-avatar{
+    height: 150px;
+    border-radius: 10px;
+    border: 0.5px solid #999;
+    margin-bottom: 20px;
+}
+
+.campos-perfil{
+    margin: 20px 0;
+    font-size: 16px;
+}
+
+.campos-perfil p{
+    font-size: 17px;
+}
 /*---------------  Estilo de las secciones de descargas  ---------------*/
+
 
 .contenedor-mats table{
     width: 95%;

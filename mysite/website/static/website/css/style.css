@@ -276,7 +276,7 @@ section button{
     }
 
 }
-
+/*
 table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
@@ -297,7 +297,7 @@ th, td {
 th {
     text-align: left;
 }
-
+*/
 /*---------------  CSS CUSTOM para botones de Boostrap  ---------------*/
 .btn {
     padding: 14px 24px;
@@ -365,6 +365,29 @@ div.login-form button.submit-btn{
 
 div.login-form fieldset{
     margin: 30px 0;
+}
+/*---------------  Estilo de las secciones de descargas  ---------------*/
+
+.contenedor-mats table{
+    width: 95%;
+    border-collapse: collapse;
+    border: none;
+    margin-bottom: 30px;
+
+}
+
+.contenedor-mats table, th, td {
+    border-bottom: 1px solid #ddd;
+}
+
+.contenedor-mats th, td {
+    padding: 10px;
+}
+
+.materias h4{
+    font-weight: 800;
+    text-decoration: underline;
+    color: #333;
 }
 
 /*---------------  Pie de pagina  ---------------*/

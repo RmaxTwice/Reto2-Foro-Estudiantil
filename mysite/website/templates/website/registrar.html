@@ -10,7 +10,19 @@
                 <div class="col-md-10 col-md-offset-1">
                     <form method="post" action="">
                         <fieldset>
-                            <legend>Datos de la Cuenta (Obligatorios)</legend>
+                            <legend>Datos Personales</legend>
+                            <div class="form-group">
+                                <label>Nombre:</label>
+                                <input type="text" name="name" class="form-control" >
+                            </div>
+                            <div class="form-group">
+                                <label>Apellido:</label>
+                                <input type="text" name="lastname" class="form-control" >
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Datos de la Cuenta</legend>
                             <div class="form-group">
                                 <label>Correo electr&oacute;nico:</label>
                                 <input type="email" class="form-control" name="email" placeholder="ejemplo@email.com" required>
@@ -45,19 +57,39 @@
 								</select> 
                             </div>
 
+                            <div class="form-group">
+                                <label class="">Pregunta de Seguridad 1:</label><br>
+                                <select name ="security1">
+                                    <option value="blank"> --- </option>
+                                    <option value="Car">¿Cual es la marca de su primer automóvil?</option>
+                                    <option value="Mom">¿Cual es el nombre de su abuela?</option>
+                                    <option value="Pet">¿Cual es el nombre de su mascota?</option>
+                                </select> 
+                            </div>
+
+                            <div class="form-group">    
+                                <label>Respuesta 1:</label>
+                                <input type="text" class="form-control" name="username" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="">Pregunta de Seguridad 2:</label><br>
+                                <select name ="security1">
+                                    <option value="blank"> --- </option>
+                                    <option value="Car">¿Cual es la marca de su primer automóvil?</option>
+                                    <option value="Mom">¿Cual es el nombre de su abuela?</option>
+                                    <option value="Pet">¿Cual es el nombre de su mascota?</option>
+                                </select> 
+                            </div>
+                            
+                            <div class="form-group">    
+                                <label>Respuesta 2:</label>
+                                <input type="text" class="form-control" name="username" required>
+                            </div>
+
                         </fieldset>
 
-                        <fieldset>
-                            <legend>Datos Personales (Opcionales)</legend>
-                            <div class="form-group">
-                                <label>Nombre:</label>
-                                <input type="text" name="name" class="form-control" >
-                            </div>
-                            <div class="form-group">
-                                <label>Apellido:</label>
-                                <input type="text" name="lastname" class="form-control" >
-                            </div>
-                        </fieldset>
+                        
                         <div class="row">
                             <div class="col-md-8 col-md-offset-2">
                                 <button type="submit" class="btn btn-success btn-lg btn-block submit-btn">Registrar</button>

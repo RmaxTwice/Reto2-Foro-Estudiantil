@@ -5,7 +5,7 @@ from django.template import RequestContext, loader
 
 
 
-# Create your views here.
+# Views de la app principal 'website' van aca.
 def index(request):
 	return render(request, 'website/index_noauth.html')
 
@@ -27,6 +27,9 @@ def contacto(request):
 
 def descargas(request):
 	return render(request, 'website/descargas.html')
+
+def descargas_materia(request):
+	return render(request, 'website/descarga_detalle.html')
 
 def informacion(request):
 	return render(request, 'website/informacion.html')

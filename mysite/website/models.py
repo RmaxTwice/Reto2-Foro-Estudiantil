@@ -16,7 +16,7 @@ class Facultad(models.Model):
 class Perfil(models.Model):
 	user = models.OneToOneField(User, on_delete = models.CASCADE)
 	desc = models.TextField(max_length=500,default='' ,blank=True)
-	facultad = models.ForeignKey(Facultad)
+	facultad = models.ForeignKey(Facultad, blank=True, default=1)
 	es_supervisor = models.BooleanField(default=False)
 	
 	def __str__(self):

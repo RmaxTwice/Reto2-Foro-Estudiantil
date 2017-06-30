@@ -1,26 +1,54 @@
 from django.shortcuts import render, render_to_response
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
+from .forms import LoginForm
+from django.contrib.auth import authenticate, login, logout
 
 
 
 
 # Views de la app principal 'website' van aca.
 def index(request):
-	return render(request, 'website/index_noauth.html')
+	if request.user.is_authenticated:
+		if request.user.perfil.es_supervisor:
+			return render(request, 'website/index_user.html',{'base_template':'website/base_admin.html'})
+		else:
+			return render(request, 'website/index_user.html',{'base_template':'website/base_usuario.html'})
+	else:
+		form = LoginForm()	
+		return render(request, 'website/index_noauth.html', {'form': form})
 
+# View para autenticar usuarios e iniciar sesión
 def logmein(request):
-	return render(request, 'website/index_user.html')
+	if request.method == 'POST':
+		form = LoginForm(request.POST)
+		if form.is_valid():
+			u = form.cleaned_data['username']
+			p = form.cleaned_data['password']
+			user = authenticate(username = u, password = p)
+			if user is not None:
+				if user.is_active:
+					login(request , user)
+					return HttpResponseRedirect('/')
+				else:
+					print('La cuenta de este usuario ha sido bloqueada!')
+			else:
+				print('El nombre de usuario o contraseña son inválidos!')
+
+
+# View para cerrar la sesión de usuarios
+def logmeout(request):
+	logout(request)
+	return HttpResponseRedirect('/')
+
+
+	return render(request, 'website/index_noauth.html')
 
 def adminview(request):
 	return render(request, 'website/index_user_admin.html')
 
 def registrar(request):
 	return render(request, 'website/registrar.html')
-
-def login(request):
-	#aca se procesará la solicitud de login.
-	return render(request, 'website/index.html')
 
 def contacto(request):
 	return render(request, 'website/contacto.html')

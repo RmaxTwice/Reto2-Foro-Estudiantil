@@ -28,7 +28,7 @@
             <div class="clipfix">
             <ul class="nav navbar-nav pull-right nav-menu-options hidden-xs">
                 <li><img src=" {% static 'website/img/avatar.gif' %}" class="hidden-xs hidden-sm nav-avatar"></li>
-                <li><h4 class="user-name">Usuario</h4></li>
+                <li><h4 class="user-name">{{ user.username }}</h4></li>
                 <li class = "user-options-menu">
                     <div class="dropdown">
                         <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
@@ -36,7 +36,7 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="menu-link" href="/perfil">Mi Perfil <span class="glyphicon glyphicon-user"></span></a></li>
-                            <li><a class="menu-link" href="/">Cerrar Sesi&oacute;n <span class="glyphicon glyphicon-log-out"></span></a></li>
+                            <li><a class="menu-link" href="/logmeout">Cerrar Sesi&oacute;n <span class="glyphicon glyphicon-log-out"></span></a></li>
                         </ul>
                     </div>
                 </li>

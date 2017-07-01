@@ -25,10 +25,10 @@ class Perfil(models.Model):
 #esta seccion de codigo nos permite crear un modelo perfil
 #por cada usuario creado en el sistema automaticamente.
 
-def crear_perfil(sender, **kwargs):
-    user = kwargs["instance"]
-    if kwargs["created"]:
-        user_profile = Perfil(user=user)
-        user_profile.save()
+#def crear_perfil(sender, **kwargs):
+#    user = kwargs["instance"]
+#    if kwargs["created"]:
+#        user_profile = Perfil(user=user)
+#        user_profile.save()
 
-post_save.connect(crear_perfil, sender=User)
+#post_save.connect(crear_perfil, sender=User)

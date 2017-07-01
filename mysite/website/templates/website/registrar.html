@@ -8,7 +8,11 @@
 		<div class="container main-container">
 			<div class="row login-form">
                 <div class="col-md-10 col-md-offset-1">
-                    <form method="post" action="">
+                    <form method="post" action="/registrar/">
+                        {% csrf_token %}
+                        {{ registeruserform.as_p }}
+                        {{ registerperfilform.as_p }}
+                        <!--
                         <fieldset>
                             <legend>Datos Personales</legend>
                             <div class="form-group">
@@ -89,7 +93,7 @@
 
                         </fieldset>
 
-                        
+                        -->
                         <div class="row">
                             <div class="col-md-8 col-md-offset-2">
                                 <button type="submit" class="btn btn-success btn-lg btn-block submit-btn">Registrar</button>

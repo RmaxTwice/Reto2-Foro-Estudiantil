@@ -8,7 +8,6 @@ urlpatterns = [
     url(r'^logmein/$', views.logmein, name='logmein'),
     url(r'^logmeout/$', views.logmeout, name='logmeout'),
     url(r'^perfil/$', views.perfil, name='perfil'),
-    url(r'^indexa/$', views.adminview, name='adminbasic'),
     url(r'^descargas/facultad$', views.descargas, name='descargas'),
     url(r'^descargas/facultad/materia$', views.descargas_materia, name='descargas_detalle'),
     url(r'^informacion/$', views.informacion, name='informacion'),

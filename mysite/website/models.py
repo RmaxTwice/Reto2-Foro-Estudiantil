@@ -32,3 +32,5 @@ class Perfil(models.Model):
 #        user_profile.save()
 
 #post_save.connect(crear_perfil, sender=User)
+
+

@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from .forms import LoginForm, RegisterPerfilForm, RegisterUserForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import connection, transaction
 
 
@@ -55,6 +56,8 @@ def registrar(request):
 			userprofile.user = user
 			userprofile.save()
 			return HttpResponseRedirect('/')
+		else:
+			return HttpResponseRedirect('/')
 	else:
 		ruf = RegisterUserForm(prefix='user')
 		rpf = RegisterPerfilForm(prefix='userprofile')
@@ -84,18 +87,35 @@ def informacion(request):
 
 
 def pedir_asesoria(request):
+	 
 	if request.user.perfil.es_supervisor:
 		return render(request, 'website/pedir_asesoria.html',{'base_template':'website/base_admin.html'})
 	else:
 		return render(request, 'website/pedir_asesoria.html',{'base_template':'website/base_usuario.html'})
 
 	
-
+@login_required() 
 def perfil(request):
+	contexto_comun = {'nombre': request.user.first_name,\
+	  				   'apellido': request.user.last_name,\
+	  				   'email': request.user.email,\
+	  				   'facultad': request.user.perfil.facultad,\
+	  				   'desc': request.user.perfil.desc,\
+	  				   'base_template':'website/base_usuario.html'\
+	  				  }
+
+	contexto_admin = {'nombre': request.user.first_name,\
+	  				   'apellido': request.user.last_name,\
+	  				   'email': request.user.email,\
+	  				   'facultad': request.user.perfil.facultad,\
+	  				   'desc': request.user.perfil.desc,\
+	  				   'base_template':'website/base_admin.html'\
+	  				  }
+
 	if request.user.perfil.es_supervisor:
-		return render(request, 'website/perfil.html',{'base_template':'website/base_admin.html'})
+		return render(request, 'website/perfil.html',contexto_admin)
 	else:
-		return render(request, 'website/perfil.html',{'base_template':'website/base_usuario.html'})
+		return render(request, 'website/perfil.html',contexto_comun)
 
 
 def sugerencia(request):

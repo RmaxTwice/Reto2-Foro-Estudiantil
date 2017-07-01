@@ -17,8 +17,15 @@ class RegisterPerfilForm(forms.ModelForm):
 
 # Formulario para registrar un usuario
 class RegisterUserForm(forms.ModelForm):
+	def __init__(self, *args, **kwargs):
+		super(RegisterUserForm, self).__init__(*args, **kwargs)
+		self.fields['email'].required = True
+
+
 	class Meta:
 		model = User
 		fields = ['first_name','last_name','username','password','email']
 		labels = { 'username': _('Usuario'), 'password': _('Contraseña'), 'email': _('Email'),'first_name': _('Nombre'), 'last_name':_('Apellido'), }
 		widgets = { 'password': forms.PasswordInput(),}
+		#self.fields['email'].required = True
+		#email.widget.attrs["required"] = "required"

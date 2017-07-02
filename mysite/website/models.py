@@ -8,6 +8,9 @@ from django.utils.translation import gettext_lazy as _
 #Modelo para representar una facultad
 
 class Facultad(models.Model):
+	class Meta:
+		verbose_name_plural = "facultades"
+
 	nombre = models.CharField(max_length=50)
 
 	def __str__(self):
@@ -16,6 +19,10 @@ class Facultad(models.Model):
 # Modelo para el perfil del usuario y otros atributos.
 
 class Perfil(models.Model):
+
+	class Meta:
+		verbose_name_plural = "perfiles"
+
 	user = models.OneToOneField(User, on_delete = models.CASCADE)
 	desc = models.TextField(max_length=500,default='' ,blank=True)
 	facultad = models.ForeignKey(Facultad, blank=True, default=1)
@@ -24,16 +31,7 @@ class Perfil(models.Model):
 	def __str__(self):
 		return 'Perfil del usuario: %s' % self.user.username
 
-#esta seccion de codigo nos permite crear un modelo perfil
-#por cada usuario creado en el sistema automaticamente.
 
-#def crear_perfil(sender, **kwargs):
-#    user = kwargs["instance"]
-#    if kwargs["created"]:
-#        user_profile = Perfil(user=user)
-#        user_profile.save()
-
-#post_save.connect(crear_perfil, sender=User)
 
 #Modelo para representar escuelas de una facultad.
 class Escuela(models.Model):
@@ -66,6 +64,10 @@ class Materia(models.Model):
 #Modelo para representar posts de la seccion informativa.
 class Informacion(models.Model):
 
+	class Meta:
+		verbose_name_plural = "informaciones"
+
+
 	TEMAS = (('G','General'),('T','Tesis'),('S','Seminario'),('SC','Servicio Comunitario'),\
 			('P','Pasantías'),('R','Reincorporaciones'))
 
@@ -85,8 +87,76 @@ class Descarga(models.Model):
 
 	TIPOS = (('G','Guia'),('E','Exámen'),('L','Laboratorio'),('B','Libro'))
 
-
 	nombre = models.CharField(max_length=100)
 	tipo = models.CharField(max_length=1, choices=TIPOS, default='G')
 	materia = models.ForeignKey(Materia, blank=True)
 	fecha_publicado = models.DateTimeField(_('Fecha Publicado'), default=timezone.now)
+
+	def __str__(self):
+		return self.nombre
+
+#Modelo para representar las solicitudes de asesoría de los usuarios.
+class Asesoria(models.Model):
+
+	ESTADOS = (('L','Libre'),('P','Pendiente'),('A','Atendida'))
+
+	titulo = models.CharField(max_length=150)
+	cuerpo = models.TextField(max_length=500)
+	fecha_enviado = models.DateTimeField(_('Fecha Enviado'), default=timezone.now)
+	supervisor = models.ForeignKey(User, blank=True,related_name='asesor',limit_choices_to={'profile__es_supervisor': True})
+	user = models.ForeignKey(User,related_name='asesorado')
+	materia = models.ForeignKey(Materia)
+	
+	def __str__(self):
+		return self.titulo
+
+#Modelo para representar las sugerencias de los usuarios.
+class Sugerencia(models.Model):
+
+	ESTADOS = (('L','Libre'),('P','Pendiente'),('A','Atendida'))
+
+	titulo = models.CharField(max_length=150)
+	cuerpo = models.TextField(max_length=500)
+	fecha_enviado = models.DateTimeField(_('Fecha Enviado'), default=timezone.now)
+	supervisor = models.ForeignKey(User, blank=True,related_name='recipiente',limit_choices_to={'perfil__es_supervisor': True})
+	user = models.ForeignKey(User,related_name='sugeridor')
+
+	def __str__(self):
+		return self.titulo
+
+#Modelo para representar las solicitudes de contacto de los usuarios.
+class Contacto(models.Model):
+
+	ESTADOS = (('L','Libre'),('P','Pendiente'),('A','Atendida'))
+
+	titulo = models.CharField(max_length=150)
+	cuerpo = models.TextField(max_length=500)
+	fecha_enviado = models.DateTimeField(_('Fecha Enviado'), default=timezone.now)
+	supervisor = models.ForeignKey(User, blank=True,related_name='supervisor',limit_choices_to={'profile__es_supervisor': True})
+	user = models.ForeignKey(User,related_name='contactador')
+
+	def __str__(self):
+		return self.titulo
+
+#esta seccion de codigo nos permite crear un modelo perfil
+#por cada usuario creado en el sistema automaticamente.
+#def crear_perfil(sender, **kwargs):
+#    user = kwargs["instance"]
+#    if kwargs["created"]:
+#        user_profile = Perfil(user=user)
+#        user_profile.save()
+#post_save.connect(crear_perfil, sender=User)
+
+#Modelo abstracto para representar las solicitudes de los usuarios.
+#class Solicitud(models.Model):
+#	ESTADOS = (('L','Libre'),('P','Pendiente'),('A','Atendida'))
+#
+#	titulo = models.CharField(max_length=150)
+#	cuerpo = models.TextField(max_length=500)
+#	fecha_enviado = models.DateTimeField(_('Fecha Enviado'), default=timezone.now)
+#	supervisor = models.ForeignKey(User, blank=True,related_name='recipiente')
+#
+#	def get_username(self):
+#		return self.titulo
+#	class Meta:
+#		abstract = True

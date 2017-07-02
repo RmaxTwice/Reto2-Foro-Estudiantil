@@ -3,10 +3,11 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+
+
 # Create your models here.
 
 #Modelo para representar una facultad
-
 class Facultad(models.Model):
 	class Meta:
 		verbose_name_plural = "facultades"
@@ -15,23 +16,6 @@ class Facultad(models.Model):
 
 	def __str__(self):
 		return self.nombre
-
-# Modelo para el perfil del usuario y otros atributos.
-
-class Perfil(models.Model):
-
-	class Meta:
-		verbose_name_plural = "perfiles"
-
-	user = models.OneToOneField(User, on_delete = models.CASCADE)
-	desc = models.TextField(max_length=500,default='' ,blank=True)
-	facultad = models.ForeignKey(Facultad, blank=True, default=1)
-	es_supervisor = models.BooleanField(default=False)
-	
-	def __str__(self):
-		return 'Perfil del usuario: %s' % self.user.username
-
-
 
 #Modelo para representar escuelas de una facultad.
 class Escuela(models.Model):
@@ -43,6 +27,38 @@ class Escuela(models.Model):
 	def __str__(self):
 		return 'Escuela de %s, Facultad de %s' % (self.nombre, self.facultad ,)
 		#return self.nombre
+
+
+# Modelo para el perfil del usuario y otros atributos.
+class Perfil(models.Model):
+
+	class Meta:
+		verbose_name_plural = "perfiles"
+
+	user = models.OneToOneField(User, on_delete = models.CASCADE)
+	cedula = models.CharField(max_length=20, default='')
+	desc = models.TextField(max_length=500,default='' ,blank=True)
+		#preguntas y respuestas de seguridad.
+	pregunta1 = models.CharField(max_length=100,default='')
+	respuesta1= models.CharField(max_length=100,default='')
+	pregunta2 = models.CharField(max_length=100,default='')
+	respuesta2= models.CharField(max_length=100,default='')
+	facultad = models.ForeignKey(Facultad, default=1)
+	escuela = models.ForeignKey(Escuela,default=1)
+	carrera = models.CharField(max_length=50,blank=True, default='')
+
+	fallos_login = models.PositiveSmallIntegerField(default=0)
+	es_supervisor = models.BooleanField(default=False)
+
+	#falta campo para una imagen del avatar del usuario
+	
+
+	def __str__(self):
+		return 'Perfil del usuario: %s' % self.user.username
+
+
+
+
 
 #Modelo para representar materias de una facultad.
 class Materia(models.Model):
@@ -95,48 +111,68 @@ class Descarga(models.Model):
 	def __str__(self):
 		return self.nombre
 
-#Modelo para representar las solicitudes de asesoría de los usuarios.
-class Asesoria(models.Model):
+#Modelo para representar las solicitudes de asesoría, contacto y sugerencias de los usuarios.
+class Solicitud(models.Model):
 
 	ESTADOS = (('L','Libre'),('P','Pendiente'),('A','Atendida'))
+	TIPOS = (('A','Asesoría'),('C','Contacto'),('S','Sugerencia'))
 
-	titulo = models.CharField(max_length=150)
-	cuerpo = models.TextField(max_length=500)
-	fecha_enviado = models.DateTimeField(_('Fecha Enviado'), default=timezone.now)
-	supervisor = models.ForeignKey(User, blank=True,related_name='asesor',limit_choices_to={'profile__es_supervisor': True})
-	user = models.ForeignKey(User,related_name='asesorado')
-	materia = models.ForeignKey(Materia)
-	
-	def __str__(self):
-		return self.titulo
-
-#Modelo para representar las sugerencias de los usuarios.
-class Sugerencia(models.Model):
-
-	ESTADOS = (('L','Libre'),('P','Pendiente'),('A','Atendida'))
-
+	nombre = models.CharField(max_length=50)
+	email = models.EmailField(max_length=50)
+	telefono = models.CharField(max_length=30, blank=True, default='')
 	titulo = models.CharField(max_length=150)
 	cuerpo = models.TextField(max_length=500)
 	fecha_enviado = models.DateTimeField(_('Fecha Enviado'), default=timezone.now)
 	supervisor = models.ForeignKey(User, blank=True,related_name='recipiente',limit_choices_to={'perfil__es_supervisor': True})
-	user = models.ForeignKey(User,related_name='sugeridor')
+	user = models.ForeignKey(User,related_name='cliente')
+	materia = models.ForeignKey(Materia)
+	tipo = models.CharField(max_length=1, choices=TIPOS, default='A')
 
 	def __str__(self):
 		return self.titulo
+
+#Modelo para representar las solicitudes de asesoría de los usuarios.
+#class Asesoria(models.Model):
+
+#	ESTADOS = (('L','Libre'),('P','Pendiente'),('A','Atendida'))
+
+#	titulo = models.CharField(max_length=150)
+#	cuerpo = models.TextField(max_length=500)
+#	fecha_enviado = models.DateTimeField(_('Fecha Enviado'), default=timezone.now)
+#	supervisor = models.ForeignKey(User, blank=True,related_name='asesor',limit_choices_to={'profile__es_supervisor': True})
+#	user = models.ForeignKey(User,related_name='asesorado')
+#	materia = models.ForeignKey(Materia)
+	
+#	def __str__(self):
+#		return self.titulo
+
+#Modelo para representar las sugerencias de los usuarios.
+#class Sugerencia(models.Model):
+
+#	ESTADOS = (('L','Libre'),('P','Pendiente'),('A','Atendida'))
+#
+#	titulo = models.CharField(max_length=150)
+#	cuerpo = models.TextField(max_length=500)
+#	fecha_enviado = models.DateTimeField(_('Fecha Enviado'), default=timezone.now)
+#	supervisor = models.ForeignKey(User, blank=True,related_name='recipiente',limit_choices_to={'perfil__es_supervisor': True})
+#	user = models.ForeignKey(User,related_name='sugeridor')
+#
+#	def __str__(self):
+#		return self.titulo
 
 #Modelo para representar las solicitudes de contacto de los usuarios.
-class Contacto(models.Model):
+#class Contacto(models.Model):
 
-	ESTADOS = (('L','Libre'),('P','Pendiente'),('A','Atendida'))
+#	ESTADOS = (('L','Libre'),('P','Pendiente'),('A','Atendida'))
 
-	titulo = models.CharField(max_length=150)
-	cuerpo = models.TextField(max_length=500)
-	fecha_enviado = models.DateTimeField(_('Fecha Enviado'), default=timezone.now)
-	supervisor = models.ForeignKey(User, blank=True,related_name='supervisor',limit_choices_to={'profile__es_supervisor': True})
-	user = models.ForeignKey(User,related_name='contactador')
+#	titulo = models.CharField(max_length=150)
+#	cuerpo = models.TextField(max_length=500)
+#	fecha_enviado = models.DateTimeField(_('Fecha Enviado'), default=timezone.now)
+#	supervisor = models.ForeignKey(User, blank=True,related_name='supervisor',limit_choices_to={'profile__es_supervisor': True})
+#	user = models.ForeignKey(User,related_name='contactador')
 
-	def __str__(self):
-		return self.titulo
+#	def __str__(self):
+#		return self.titulo
 
 #esta seccion de codigo nos permite crear un modelo perfil
 #por cada usuario creado en el sistema automaticamente.

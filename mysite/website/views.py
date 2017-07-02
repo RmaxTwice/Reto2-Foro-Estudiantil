@@ -129,11 +129,7 @@ def administrar_descargas(request):
 	return render(request, 'website/administrar_descargas.html')
 
 def administrar_solicitudes(request):
-	if request.user.perfil.es_supervisor:
-		return render(request, 'website/descargas.html',{'base_template':'website/base_admin.html'})
-	else:
-		return render(request, 'website/descargas.html',{'base_template':'website/base_usuario.html'})
-
+	
 	return render(request, 'website/administrar_solicitudes.html')
 
 def administrar_informacion(request):

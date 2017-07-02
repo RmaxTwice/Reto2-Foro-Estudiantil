@@ -13,7 +13,7 @@ class LoginForm(forms.Form):
 class RegisterPerfilForm(forms.ModelForm):
 	class Meta:
 		model = Perfil
-		fields = ['facultad']
+		fields = ['facultad','cedula','pregunta1','respuesta1','pregunta2','respuesta2']
 
 # Formulario para registrar un usuario
 class RegisterUserForm(forms.ModelForm):

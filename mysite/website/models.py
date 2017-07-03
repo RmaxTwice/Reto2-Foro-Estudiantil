@@ -28,6 +28,21 @@ class Escuela(models.Model):
 		return 'Escuela de %s, Facultad de %s' % (self.nombre, self.facultad ,)
 		#return self.nombre
 
+#Modelo para representar materias de una facultad.
+class Materia(models.Model):
+
+	SEMESTRES = (('electiva', 'Electiva'),('1', 'I'),('2', 'II'),('3', 'III'),('4', 'IV'),('5', 'V'),\
+				('6', 'VI'),('7', 'VII'),('8', 'VIII'),('9', 'IX'),('10', 'X'))
+
+	nombre = models.CharField(max_length=100)
+	creditos = models.PositiveSmallIntegerField(default=0)
+	codigo = models.PositiveSmallIntegerField()
+	escuela = models.ForeignKey(Escuela, blank=True, default=1)
+	semestre = models.CharField(max_length=10, choices=SEMESTRES, default='I')
+	unique_together = (("codigo", "facultad"),)
+
+	def __str__(self):
+		return '%s: %s' % (self.nombre,self.escuela)
 
 # Modelo para el perfil del usuario y otros atributos.
 class Perfil(models.Model):
@@ -43,39 +58,19 @@ class Perfil(models.Model):
 	respuesta1= models.CharField(max_length=100,default='')
 	pregunta2 = models.CharField(max_length=100,default='')
 	respuesta2= models.CharField(max_length=100,default='')
+
 	facultad = models.ForeignKey(Facultad, default=1)
 	escuela = models.ForeignKey(Escuela,default=1)
 	carrera = models.CharField(max_length=50,blank=True, default='')
 
 	fallos_login = models.PositiveSmallIntegerField(default=0)
 	es_supervisor = models.BooleanField(default=False)
+	materia = models.ForeignKey(Materia,blank=True, default = 1) #Materia que el usuario supervisor gestiona.
 
 	#falta campo para una imagen del avatar del usuario
 	
-
 	def __str__(self):
 		return 'Perfil del usuario: %s' % self.user.username
-
-
-
-
-
-#Modelo para representar materias de una facultad.
-class Materia(models.Model):
-
-	SEMESTRES = (('electiva', 'Electiva'),('1', 'I'),('2', 'II'),('3', 'III'),('4', 'IV'),('5', 'V'),\
-				('6', 'VI'),('7', 'VII'),('8', 'VIII'),('9', 'IX'),('10', 'X'))
-
-	nombre = models.CharField(max_length=100)
-	creditos = models.PositiveSmallIntegerField(default=0)
-	codigo = models.PositiveSmallIntegerField()
-	facultad = models.ForeignKey(Facultad, blank=True, default=1)
-	escuela = models.ForeignKey(Escuela, blank=True, default=1)
-	semestre = models.CharField(max_length=10, choices=SEMESTRES, default='I')
-	unique_together = (("codigo", "facultad"),)
-
-	def __str__(self):
-		return '%s: %s' % (self.nombre,self.escuela)
 
 #Modelo para representar posts de la seccion informativa.
 class Informacion(models.Model):
@@ -114,6 +109,9 @@ class Descarga(models.Model):
 #Modelo para representar las solicitudes de asesoría, contacto y sugerencias de los usuarios.
 class Solicitud(models.Model):
 
+	class Meta:
+		verbose_name_plural = "solicitudes"
+
 	ESTADOS = (('L','Libre'),('P','Pendiente'),('A','Atendida'))
 	TIPOS = (('A','Asesoría'),('C','Contacto'),('S','Sugerencia'))
 
@@ -126,6 +124,7 @@ class Solicitud(models.Model):
 	supervisor = models.ForeignKey(User, blank=True,related_name='recipiente',limit_choices_to={'perfil__es_supervisor': True})
 	user = models.ForeignKey(User,related_name='cliente')
 	materia = models.ForeignKey(Materia)
+	estado = models.CharField(max_length=1, choices=ESTADOS, default='L')
 	tipo = models.CharField(max_length=1, choices=TIPOS, default='A')
 
 	def __str__(self):

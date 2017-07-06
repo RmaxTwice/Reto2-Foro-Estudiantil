@@ -61,10 +61,13 @@ class Perfil(models.Model):
 
 	facultad = models.ForeignKey(Facultad, default=1)
 	escuela = models.ForeignKey(Escuela,default=1)
+
 	carrera = models.CharField(max_length=50,blank=True, default='')
 
 	fallos_login = models.PositiveSmallIntegerField(default=0)
+
 	es_supervisor = models.BooleanField(default=False)
+
 	materia = models.ForeignKey(Materia,blank=True, default = 1) #Materia que el usuario supervisor gestiona.
 
 	#falta campo para una imagen del avatar del usuario

@@ -16,11 +16,11 @@ class LoginForm(forms.Form):
 	def __init__(self, *args, **kwargs):
 		super(LoginForm, self).__init__(*args, **kwargs)
 		self.fields['usernameLogin'].widget = forms.TextInput(attrs={'class':'form-control'})
-		self.fields['passwordLogin'].widget = forms.TextInput(attrs={'class':'form-control'})
+		self.fields['passwordLogin'].widget = forms.PasswordInput(attrs={'class':'form-control'})
 		
 
 	usernameLogin = forms.CharField(label="Usuario", max_length=64)
-	passwordLogin = forms.CharField(label="Contraseña",widget=forms.PasswordInput()) #Este widget nos permite ingresar caracteres ocultos.
+	passwordLogin = forms.CharField(label="Contraseña") #Este widget nos permite ingresar caracteres ocultos.
 
 
 # Formulario para registrar un perfil de usuario

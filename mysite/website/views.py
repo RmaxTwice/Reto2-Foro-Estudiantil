@@ -24,8 +24,8 @@ def logmein(request):
 	if request.method == 'POST':
 		form = LoginForm(request.POST)
 		if form.is_valid():
-			u = form.cleaned_data['username']
-			p = form.cleaned_data['password']
+			u = form.cleaned_data['usernameLogin']
+			p = form.cleaned_data['passwordLogin']
 			user = authenticate(username = u, password = p)
 			if user is not None:
 				if user.is_active:

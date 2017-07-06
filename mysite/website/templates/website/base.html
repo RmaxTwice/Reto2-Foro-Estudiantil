@@ -88,6 +88,13 @@ class="close" title="Close Modal">&times;</span>
                 <div class="col-md-12">
                     <form action="/logmein/" method="POST" >
                         {% csrf_token %}
+
+                        {% for field in loginf %}
+                            <div class="form-group">
+                                {{ field.label_tag }}<br>
+                                {{ field }}
+                            </div>
+                        {% endfor %}
                         <!--
                         <div class="form-group">
                             <label>Nombre de Usuario</label>
@@ -97,8 +104,9 @@ class="close" title="Close Modal">&times;</span>
                             <label >Contraseña</label>
                             <input type="password" placeholder="Igrese su contraseña" class="form-control" name="pass" required>
                         </div>
-                        -->
+                        
                         {{ form.as_p }}
+                        -->
                         <div class="row">                     
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-success btn-lg btn-block submit-btn">Ingresar</button>

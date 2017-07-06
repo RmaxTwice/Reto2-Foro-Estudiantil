@@ -10,21 +10,29 @@
                 <div class="col-md-10 col-md-offset-1">
                     <form method="post" action="/registrar/">
                         {% csrf_token %}
-                        {{ registeruserform.as_p }}
-                        {{ registerperfilform.as_p }}
-                        <!--
+                        
                         <fieldset>
-                            <legend>Datos Personales</legend>
+                            <legend>Datos de Cuenta</legend>
+                            {% for field in registeruserform %}
                             <div class="form-group">
-                                <label>Nombre:</label>
-                                <input type="text" name="name" class="form-control" >
+                                {{ field.label_tag }}<br>
+                                {{ field }}
                             </div>
+                            {% endfor %}
+
+                            <legend>Datos de Seguridad</legend>
+                            {% for field in registerperfilform %}
                             <div class="form-group">
-                                <label>Apellido:</label>
-                                <input type="text" name="lastname" class="form-control" >
+                                {{ field.label_tag }}<br>
+                                {{ field }}
                             </div>
+                            {% endfor %}
                         </fieldset>
 
+
+
+
+                        <!--
                         <fieldset>
                             <legend>Datos de la Cuenta</legend>
                             <div class="form-group">
@@ -92,8 +100,8 @@
                             </div>
 
                         </fieldset>
-
-                        -->
+                    -->
+                        
                         <div class="row">
                             <div class="col-md-8 col-md-offset-2">
                                 <button type="submit" class="btn btn-success btn-lg btn-block submit-btn">Registrar</button>

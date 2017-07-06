@@ -1,4 +1,4 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from .forms import LoginForm, RegisterPerfilForm, RegisterUserForm
@@ -16,8 +16,8 @@ def index(request):
 		else:
 			return render(request, 'website/index_user.html',{'base_template':'website/base_usuario.html'})
 	else:
-		form = LoginForm()	
-		return render(request, 'website/index_noauth.html', {'form': form})
+		loginf = LoginForm()	
+		return render(request, 'website/index_noauth.html', {'loginf': loginf})
 
 # View para autenticar usuarios e iniciar sesión
 def logmein(request):
@@ -61,7 +61,12 @@ def registrar(request):
 	else:
 		ruf = RegisterUserForm(prefix='user')
 		rpf = RegisterPerfilForm(prefix='userprofile')
-		return render(request, 'website/registrar.html', {'registeruserform':ruf, 'registerperfilform':rpf})
+		loginf = LoginForm()
+			#Si un usuario con sesión iniciada llega a esta página, se le cerrará la sesión.
+		if request.user.is_authenticated:
+			logout(request)
+
+		return render(request, 'website/registrar.html', {'registeruserform':ruf, 'registerperfilform':rpf,'loginf': loginf})
 
 def contacto(request):
 	return render(request, 'website/contacto.html')
@@ -129,11 +134,7 @@ def administrar_descargas(request):
 	return render(request, 'website/administrar_descargas.html')
 
 def administrar_solicitudes(request):
-	if request.user.perfil.es_supervisor:
-		return render(request, 'website/descargas.html',{'base_template':'website/base_admin.html'})
-	else:
-		return render(request, 'website/descargas.html',{'base_template':'website/base_usuario.html'})
-
+	
 	return render(request, 'website/administrar_solicitudes.html')
 
 def administrar_informacion(request):

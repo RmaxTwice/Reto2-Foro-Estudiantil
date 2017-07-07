@@ -47,16 +47,23 @@ class Materia(models.Model):
 # Modelo para el perfil del usuario y otros atributos.
 class Perfil(models.Model):
 
+	PREGUNTAS = (('libro','¿Cual es tu libro infantil favorito?'),\
+				 ('cancion','¿Cómo se llama tu canción favorita?'),\
+				 ('abuelo','¿Cómo se llama tu abuelo paterno?'),\
+				 ('abuela','¿Cómo se llama tu abuela materna?'),\
+				 ('mascota','¿Como se llamaba tu primera mascota?'),\
+				 ('auto','¿Cual es tu marca de autos preferida?'))
+
 	class Meta:
 		verbose_name_plural = "perfiles"
 
 	user = models.OneToOneField(User, on_delete = models.CASCADE)
-	cedula = models.CharField(max_length=20, default='')
+	cedula = models.CharField(max_length=20, default='', unique=True)
 	desc = models.TextField(max_length=500,default='' ,blank=True)
 		#preguntas y respuestas de seguridad.
-	pregunta1 = models.CharField(max_length=100,default='')
+	pregunta1 = models.CharField(max_length=15,choices=PREGUNTAS, default='libro')
 	respuesta1= models.CharField(max_length=100,default='')
-	pregunta2 = models.CharField(max_length=100,default='')
+	pregunta2 = models.CharField(max_length=15,choices=PREGUNTAS, default='auto')
 	respuesta2= models.CharField(max_length=100,default='')
 
 	facultad = models.ForeignKey(Facultad, default=1)

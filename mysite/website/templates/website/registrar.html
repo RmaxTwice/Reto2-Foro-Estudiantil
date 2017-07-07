@@ -8,9 +8,9 @@
 		<div class="container main-container">
 			<div class="row login-form">
                 <div class="col-md-10 col-md-offset-1">
+
                     <form method="post" action="/registrar/">
-                        {% csrf_token %}
-                        
+                        {% csrf_token %} 
                         <fieldset>
                             <legend>Datos de Cuenta</legend>
                             {% for field in registeruserform %}

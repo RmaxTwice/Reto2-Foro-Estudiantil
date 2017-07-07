@@ -21,21 +21,17 @@ def index(request):
 
 # View para autenticar usuarios e iniciar sesión
 def logmein(request):
-	if request.method == 'POST':
-		form = LoginForm(request.POST)
-		if form.is_valid():
-			u = form.cleaned_data['usernameLogin']
-			p = form.cleaned_data['passwordLogin']
-			user = authenticate(username = u, password = p)
-			if user is not None:
-				if user.is_active:
-					login(request , user)
-					return HttpResponseRedirect('/')
-				else:
-					return HttpResponseRedirect('/')
-			else:
-				return HttpResponseRedirect('/')
+	
+	form = LoginForm(request.POST or None)
 
+	if request.POST and form.is_valid():
+		user = form.login(request)
+		if user:
+			login(request, user)
+			return HttpResponseRedirect('/')
+	return render(request, 'website/index_noauth.html', {'loginf': form })
+
+	
 # View para cerrar la sesión de usuarios
 def logmeout(request):
 	logout(request)
@@ -57,7 +53,7 @@ def registrar(request):
 			userprofile.save()
 			return HttpResponseRedirect('/')
 		else:
-			return HttpResponseRedirect('/')
+			return render_to_response('website/registrar.html', {'registeruserform':ruf, 'registerperfilform':rpf,'loginf': loginf})
 	else:
 		ruf = RegisterUserForm(prefix='user')
 		rpf = RegisterPerfilForm(prefix='userprofile')
@@ -68,8 +64,19 @@ def registrar(request):
 
 		return render(request, 'website/registrar.html', {'registeruserform':ruf, 'registerperfilform':rpf,'loginf': loginf})
 
+
+
+
 def contacto(request):
-	return render(request, 'website/contacto.html')
+	if request.user.is_authenticated:
+		if request.user.perfil.es_supervisor:
+			return render(request, 'website/contacto.html',{'base_template':'website/base_admin.html'})
+		else:
+			return render(request, 'website/contacto.html',{'base_template':'website/base_usuario.html'})
+	else:
+		loginf = LoginForm()	
+		return render(request, 'website/contacto.html', {'base_template':'website/base.html','loginf': loginf})
+
 
 def descargas(request):
 	if request.user.perfil.es_supervisor:

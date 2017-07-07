@@ -93,6 +93,7 @@ class="close" title="Close Modal">&times;</span>
                             <div class="form-group">
                                 {{ field.label_tag }}<br>
                                 {{ field }}
+                                {{ field.errors }}
                             </div>
                         {% endfor %}
                         <!--
@@ -107,6 +108,13 @@ class="close" title="Close Modal">&times;</span>
                         
                         {{ form.as_p }}
                         -->
+                        {% if loginf.non_field_errors %}
+                            <ul class='form-errors'>
+                                {% for error in loginf.non_field_errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
                         <div class="row">                     
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-success btn-lg btn-block submit-btn">Ingresar</button>

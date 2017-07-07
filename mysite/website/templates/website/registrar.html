@@ -10,12 +10,23 @@
                 <div class="col-md-10 col-md-offset-1">
 
                     <form method="post" action="/registrar/">
+
                         {% csrf_token %} 
+
                         <fieldset>
                             <legend>Datos de Cuenta</legend>
                             {% for field in registeruserform %}
                             <div class="form-group">
                                 {{ field.label_tag }}<br>
+
+                                {% if field.errors %}
+                                    <div class="form-errors">
+                                    {% for error in field.errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                    </div>
+                                {% endif %}
+
                                 {{ field }}
                             </div>
                             {% endfor %}
@@ -28,80 +39,27 @@
                             </div>
                             {% endfor %}
                         </fieldset>
-
-
-
-
-                        <!--
-                        <fieldset>
-                            <legend>Datos de la Cuenta</legend>
-                            <div class="form-group">
-                                <label>Correo electr&oacute;nico:</label>
-                                <input type="email" class="form-control" name="email" placeholder="ejemplo@email.com" required>
-                            </div>
-                            <div class="form-group">    
-                                <label>Nombre de Usuario:</label>
-                                <input type="text" class="form-control" name="username" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="">Contraseña:</label>
-                                <input type="password" class="form-control" name="pass" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="">Confirmar contraseña:</label>
-                                <input type="password" class="form-control" name="passcomf" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="">C&eacute;dula:</label>
-                                <input type="text" class="form-control" placeholder="V-01234567" name="ci" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="">Facultad:</label><br>
-                                <select name ="facultad">
-									<option value="Ciencias">Ciencias</option>
-									<option value="Ingenieria">Ingenier&iacute;a</option>
-									<option value="Medicina">Medicina</option>
-									<option value="Derecho">Derecho</option>
-								</select> 
-                            </div>
-
-                            <div class="form-group">
-                                <label class="">Pregunta de Seguridad 1:</label><br>
-                                <select name ="security1">
-                                    <option value="blank"> --- </option>
-                                    <option value="Car">¿Cual es la marca de su primer automóvil?</option>
-                                    <option value="Mom">¿Cual es el nombre de su abuela?</option>
-                                    <option value="Pet">¿Cual es el nombre de su mascota?</option>
-                                </select> 
-                            </div>
-
-                            <div class="form-group">    
-                                <label>Respuesta 1:</label>
-                                <input type="text" class="form-control" name="username" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="">Pregunta de Seguridad 2:</label><br>
-                                <select name ="security1">
-                                    <option value="blank"> --- </option>
-                                    <option value="Car">¿Cual es la marca de su primer automóvil?</option>
-                                    <option value="Mom">¿Cual es el nombre de su abuela?</option>
-                                    <option value="Pet">¿Cual es el nombre de su mascota?</option>
-                                </select> 
-                            </div>
-                            
-                            <div class="form-group">    
-                                <label>Respuesta 2:</label>
-                                <input type="text" class="form-control" name="username" required>
-                            </div>
-
-                        </fieldset>
-                    -->
                         
+                        {% if registeruserform.non_field_errors %}
+                            <ul class='form-errors'>
+                                {% for error in registeruserform.non_field_errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+
+                        {% if registerperfilform.non_field_errors %}
+                            <ul class='form-errors'>
+                                {% for error in registerperfilform.non_field_errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+
+<!--
+{{ registeruserform.as_p }}
+{{ registerperfilform.as_p }}
+-->
                         <div class="row">
                             <div class="col-md-8 col-md-offset-2">
                                 <button type="submit" class="btn btn-success btn-lg btn-block submit-btn">Registrar</button>

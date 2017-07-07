@@ -43,6 +43,8 @@ def logmeout(request):
 
 # View para desplegar el formulario de registro de usuarios y atender las peticiones de registro
 def registrar(request):
+	loginf = LoginForm()
+	
 	if request.method == 'POST':
 		ruf = RegisterUserForm(request.POST, prefix='user')
 		rpf = RegisterPerfilForm(request.POST, prefix='userprofile')
@@ -53,11 +55,10 @@ def registrar(request):
 			userprofile.save()
 			return HttpResponseRedirect('/')
 		else:
-			return render_to_response('website/registrar.html', {'registeruserform':ruf, 'registerperfilform':rpf,'loginf': loginf})
+			return render(request,'website/registrar.html', {'registeruserform':ruf, 'registerperfilform':rpf,'loginf': loginf})
 	else:
 		ruf = RegisterUserForm(prefix='user')
 		rpf = RegisterPerfilForm(prefix='userprofile')
-		loginf = LoginForm()
 			#Si un usuario con sesión iniciada llega a esta página, se le cerrará la sesión.
 		if request.user.is_authenticated:
 			logout(request)

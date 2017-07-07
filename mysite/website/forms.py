@@ -7,7 +7,7 @@ from django.core.validators import RegexValidator 		#usado para validar el forma
 from django.contrib.auth import authenticate
 
 #Validador para las cedulas
-cedula_validator = RegexValidator(r"[VE]-\d+","Ingrese la cédula en el formato indicado.")
+cedula_validator = RegexValidator(r"[VE]-\d+","Ingrese una cédula en el formato indicado. V-#### ó E-####", code="invalid")
 
 my_default_errors = {
     'required': 'Por favor rellene este campo.',
@@ -47,6 +47,11 @@ class LoginForm(forms.Form):
 
 # Formulario para registrar un perfil de usuario
 class RegisterPerfilForm(forms.ModelForm):
+
+	def __init__(self, *args, **kwargs):
+		super(RegisterPerfilForm, self).__init__(*args, **kwargs)
+		self.fields['cedula'].validators = [cedula_validator]
+
 	class Meta:
 		model = Perfil
 		fields = ['facultad','cedula','pregunta1','respuesta1','pregunta2','respuesta2']
@@ -57,11 +62,13 @@ class RegisterPerfilForm(forms.ModelForm):
 				   'respuesta2': _('Respuesta'),\
 				 }
 		widgets = {'cedula': forms.TextInput(attrs={'placeholder': 'V-12345 ó E-12345','class':'form-control'}),\
-				   'pregunta1': forms.TextInput(attrs={'class':'form-control'}),\
-				   'pregunta2': forms.TextInput(attrs={'class':'form-control'}),\
+				   #'pregunta1': forms.TextInput(attrs={'class':'form-control'}),\
+				   #'pregunta2': forms.TextInput(attrs={'class':'form-control'}),\
 				   'respuesta1': forms.TextInput(attrs={'class':'form-control'}),\
 				   'respuesta2': forms.TextInput(attrs={'class':'form-control'}),\
 				   }
+		#validators = {'cedula':[cedula_validator]}
+
 
 # Formulario para registrar un usuario
 class RegisterUserForm(UserCreationForm):
@@ -87,11 +94,32 @@ class RegisterUserForm(UserCreationForm):
 		model = User
 		fields = ('first_name','last_name','email','username','password1','password2',)
 
+	def clean_username(self):
+		username = self.cleaned_data["username"]
+
+		if User.objects.filter(username=username).exists():
+			raise forms.ValidationError( _("Este nombre de usuario ya esta en uso, escoga otro."),code='duplicate_username')
+		
+		return username 
+
+
 	def clean_email(self):
+		#print (self.cleaned_data)
 		data = self.cleaned_data['email']
 		if User.objects.filter(email=data).exists():
-			raise forms.ValidationError("This email already used")
-			return data
+			raise forms.ValidationError(_("Dirección de correo ya esta en uso, escoga otra."),code="invalid")
+		return data
+
+	def clean_password2(self):
+		password1 = self.cleaned_data.get('password1')
+		password2 = self.cleaned_data.get('password2')
+
+		if not password2:
+			raise forms.ValidationError("¡Debes repetir tu contraseña!")
+		if password1 != password2:
+			raise forms.ValidationError("¡Las contraseñas nos son iguales!")
+		return password2
+
 
 		#'password': forms.PasswordInput(),\
 

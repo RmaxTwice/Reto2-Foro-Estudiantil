@@ -232,6 +232,11 @@ div#header-principal p{
 }*/
 /*---------------  SECCIONES DE CONTENIDO Y ACCESO  ---------------*/
 
+.invisible{
+    display: none;
+}
+
+
 h1{
     text-align: center;
     color: #eee;
@@ -374,6 +379,11 @@ div.login-form button.submit-btn{
 
 div.login-form fieldset{
     margin: 30px 0;
+}
+
+.form-errors{
+    color: red;
+    padding-left: 20px;
 }
 
 /*---------------  Estilo de las secciones de Perfil y Modificacion de perfiles  ---------------*/

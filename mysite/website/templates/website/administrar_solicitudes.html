@@ -5,8 +5,11 @@
 
 {% block content %}
 	
-	<h1> Administrar mis solicitudes </h1>
+	<h1> Administrar Solicitudes </h1>
 	<div class="jumbotron container">
+		<h3 class="text-center sol-title">Mis solicitudes</h3>
+		<hr>
+		<br>
 		<div class="row">
 			<div class="col-md-12">
 				<table id="t01">
@@ -29,6 +32,46 @@
 						<td class="">Buenos dias...</td>
 						<td class="">Contacto</td>
 						<td class="">Atendida</td>
+						<td class="">14/06/2017</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+		<h3 class="text-center sol-title2">Solicitudes por Atender</h3>
+		<hr>
+		<br>
+		<div class="row">
+			<div class="col-md-12">
+				<table id="t01">
+					<tr>
+						<th>Tema</th>
+						<th>Mensaje</th>
+						<th>Tipo</th>
+						<th>Estado</th>
+						<th>Fecha</th>
+					</tr>
+					{% for sol in solLibres %}
+						<tr>
+							<td><a href="{{ sol.id }}">{{ sol.titulo }}</a></td>
+							<td>{{ sol.cuerpo|truncatewords:12 }}</td>
+							<td>{{ sol.tipo }}</td>
+							<td>{{ sol.estado }}</td>
+							<td>{{ sol.fecha_enviado.day }}/{{ sol.fecha_enviado.month }}/{{ sol.fecha_enviado.year }}</td>
+						</tr>
+					{% endfor %}
+					<tr>
+						<td ><a href="#">Dudas sobre materia</a></td>
+						<td >Hola, queria preguntar acerca de...</td>
+						<td >Asesor&iacute;a</td>
+						<td >Libre</td>
+						<td >15/06/2017</td>
+					</tr>
+					<tr>
+						<td class=""><a href="#">Contacto</a></td>
+						<td class="">Buenos dias...</td>
+						<td class="">Contacto</td>
+						<td class="">Libre</td>
 						<td class="">14/06/2017</td>
 					</tr>
 				</table>

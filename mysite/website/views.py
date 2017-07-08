@@ -1,10 +1,11 @@
-from django.shortcuts import render, render_to_response, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, render_to_response, redirect, get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import RequestContext, loader
 from .forms import LoginForm, RegisterPerfilForm, RegisterUserForm, ContactanosForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import connection, transaction
+from .models import Solicitud
 
 
 
@@ -73,7 +74,7 @@ def contacto(request):
 		cform = ContactanosForm(request.POST or None)
 		if cform.is_valid():
 			solicitud = cform.save(commit=False)
-			solicitud.tipo = 'C'
+			solicitud.tipo = 'Contacto'
 			solicitud.save()
 			return HttpResponseRedirect('/')
 		return HttpResponseRedirect('/contacto')
@@ -84,8 +85,7 @@ def contacto(request):
 				return render(request, 'website/contacto.html',{'base_template':'website/base_admin.html','contactof':contactof})
 			else:
 				return render(request, 'website/contacto.html',{'base_template':'website/base_usuario.html','contactof':contactof})
-		else:
-			
+		else:			
 			loginf = LoginForm()	
 			return render(request, 'website/contacto.html', {'base_template':'website/base.html','loginf': loginf,'contactof':contactof})
 
@@ -148,13 +148,30 @@ def sugerencia(request):
 	else:
 		return render(request, 'website/sugerencia.html',{'base_template':'website/base_usuario.html'})
 
+@login_required()
+def solicitud_detalle(request,id_sol):
+	if request.user.perfil.es_supervisor:
+		#Buscamos las solicitudes libres
 
-def administrar_descargas(request):
-	return render(request, 'website/administrar_descargas.html')
+		solicitud = get_object_or_404(Solicitud, pk=id_sol)
+		#solicitud = Solicitud.objects.get(pk=id_sol)
+		
+		return render(request, 'website/solicitud_detalle.html', {'solicitud':solicitud})
+	else:
+		raise Http404("Esta página no existe")
 
+@login_required()
 def administrar_solicitudes(request):
-	
-	return render(request, 'website/administrar_solicitudes.html')
 
-def administrar_informacion(request):
-	return render(request, 'website/administrar_informacion.html')
+	if request.user.perfil.es_supervisor:
+		#Buscamos las solicitudes libres
+
+		libres = Solicitud.objects.filter(estado = 'Libre')
+		contexto = {'solLibres':libres}
+		return render(request, 'website/administrar_solicitudes.html',contexto)
+
+	else:
+		raise Http404("Esta página no existe")
+
+
+

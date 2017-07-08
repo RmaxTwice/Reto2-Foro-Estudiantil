@@ -122,8 +122,8 @@ class Solicitud(models.Model):
 	class Meta:
 		verbose_name_plural = "solicitudes"
 
-	ESTADOS = (('L','Libre'),('P','Pendiente'),('A','Atendida'))
-	TIPOS = (('A','Asesoría'),('C','Contacto'),('S','Sugerencia'))
+	ESTADOS = (('Libre','Libre'),('Pendiente','Pendiente'),('Atendida','Atendida'))
+	TIPOS = (('Asesoría','Asesoría'),('Contacto','Contacto'),('Sugerencia','Sugerencia'))
 
 	nombre = models.CharField(max_length=50)
 	email = models.EmailField(max_length=50)
@@ -134,8 +134,8 @@ class Solicitud(models.Model):
 	supervisor = models.ForeignKey(User, blank=True, null=True, related_name='recipiente',limit_choices_to={'perfil__es_supervisor': True})
 	user = models.ForeignKey(User,related_name='cliente', blank=True, null=True)
 	materia = models.ForeignKey(Materia, blank=True, null=True)
-	estado = models.CharField(max_length=1, choices=ESTADOS, default='L')
-	tipo = models.CharField(max_length=1, choices=TIPOS, default='A')
+	estado = models.CharField(max_length=15, choices=ESTADOS, default='Libre')
+	tipo = models.CharField(max_length=15, choices=TIPOS, default='Asesoría')
 
 	def __str__(self):
 		return self.titulo

@@ -421,7 +421,6 @@ div.login-form fieldset{
     border-collapse: collapse;
     border: none;
     margin-bottom: 30px;
-
 }
 
 .contenedor-mats table, th, td {
@@ -436,6 +435,29 @@ div.login-form fieldset{
     font-weight: 800;
     text-decoration: underline;
     color: #333;
+}
+
+/*---------------  Estilo de la sección de administrar solicitudes  ---------------*/
+
+table#t01{
+    width: 100%;
+    margin: 10px 0 30px 0;
+}
+
+table#t01 th, td {
+    padding: 10px;
+}
+
+.s-pendiente{
+    background-color: rgba(255,250,205,0.7)
+}
+
+table#t01 th {
+    text-align: left;
+}
+
+h3.sol-title2{
+    margin-top: 20px;
 }
 
 /*---------------  Pie de pagina  ---------------*/

@@ -131,9 +131,9 @@ class Solicitud(models.Model):
 	titulo = models.CharField(max_length=125)
 	cuerpo = models.TextField(max_length=255)
 	fecha_enviado = models.DateTimeField(_('Fecha Enviado'), default=timezone.now)
-	supervisor = models.ForeignKey(User, blank=True,related_name='recipiente',limit_choices_to={'perfil__es_supervisor': True})
-	user = models.ForeignKey(User,related_name='cliente', blank=True)
-	materia = models.ForeignKey(Materia)
+	supervisor = models.ForeignKey(User, blank=True, null=True, related_name='recipiente',limit_choices_to={'perfil__es_supervisor': True})
+	user = models.ForeignKey(User,related_name='cliente', blank=True, null=True)
+	materia = models.ForeignKey(Materia, blank=True, null=True)
 	estado = models.CharField(max_length=1, choices=ESTADOS, default='L')
 	tipo = models.CharField(max_length=1, choices=TIPOS, default='A')
 

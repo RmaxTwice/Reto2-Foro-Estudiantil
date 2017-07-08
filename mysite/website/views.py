@@ -75,6 +75,8 @@ def contacto(request):
 			solicitud = cform.save(commit=False)
 			solicitud.tipo = 'C'
 			solicitud.save()
+			return HttpResponseRedirect('/')
+		return HttpResponseRedirect('/contacto')
 	else:
 		contactof = ContactanosForm()
 		if request.user.is_authenticated:

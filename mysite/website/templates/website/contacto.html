@@ -9,7 +9,9 @@
 	<div class="container main-container">
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
-				<form>
+				<form method="post" action="/contacto/">
+
+					{% csrf_token %} 
 					<fieldset>
 						<legend>Datos de Contacto</legend>
 						{% for field in contactof %}

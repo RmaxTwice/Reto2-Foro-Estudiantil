@@ -70,7 +70,11 @@ def registrar(request):
 
 def contacto(request):
 	if request.method == 'POST':
-		return render(request, 'website/contacto.html', {'base_template':'website/base.html','loginf': loginf})
+		cform = ContactanosForm(request.POST or None)
+		if cform.is_valid():
+			solicitud = cform.save(commit=False)
+			solicitud.tipo = 'C'
+			solicitud.save()
 	else:
 		contactof = ContactanosForm()
 		if request.user.is_authenticated:

@@ -19,21 +19,23 @@
                         <fieldset>
                             <legend>Datos de Cuenta</legend>
                             {% for field in registeruserform %}
-                            <div class="form-group">
-                                {{ field.label_tag }}<br>
+                                <div class="form-group">
+                                    {{ field.label_tag }}<br>
 
-                                {% if field.errors %}
-                                    <div class="form-errors">
-                                    {% for error in field.errors %}
-                                        <p>{{ error }}</p>
-                                    {% endfor %}
-                                    </div>
-                                {% endif %}
+                                    {% if field.errors %}
+                                        <div class="form-errors">
+                                        {% for error in field.errors %}
+                                            <p>{{ error }}</p>
+                                        {% endfor %}
+                                        </div>
+                                    {% endif %}
 
-                                {{ field }}
-                            </div>
+                                    {{ field }}
+                                </div>
                             {% endfor %}
-
+                        </fieldset>
+                        
+                        <fieldset>
                             <legend>Datos de Seguridad</legend>
                             {% for field in registerperfilform %}
                             <div class="form-group">

@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
-from .forms import LoginForm, RegisterPerfilForm, RegisterUserForm
+from .forms import LoginForm, RegisterPerfilForm, RegisterUserForm, ContactanosForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import connection, transaction
@@ -44,7 +44,7 @@ def logmeout(request):
 # View para desplegar el formulario de registro de usuarios y atender las peticiones de registro
 def registrar(request):
 	loginf = LoginForm()
-	
+
 	if request.method == 'POST':
 		ruf = RegisterUserForm(request.POST, prefix='user')
 		rpf = RegisterPerfilForm(request.POST, prefix='userprofile')
@@ -69,14 +69,19 @@ def registrar(request):
 
 
 def contacto(request):
-	if request.user.is_authenticated:
-		if request.user.perfil.es_supervisor:
-			return render(request, 'website/contacto.html',{'base_template':'website/base_admin.html'})
-		else:
-			return render(request, 'website/contacto.html',{'base_template':'website/base_usuario.html'})
-	else:
-		loginf = LoginForm()	
+	if request.method == 'POST':
 		return render(request, 'website/contacto.html', {'base_template':'website/base.html','loginf': loginf})
+	else:
+		contactof = ContactanosForm()
+		if request.user.is_authenticated:
+			if request.user.perfil.es_supervisor:
+				return render(request, 'website/contacto.html',{'base_template':'website/base_admin.html','contactof':contactof})
+			else:
+				return render(request, 'website/contacto.html',{'base_template':'website/base_usuario.html','contactof':contactof})
+		else:
+			
+			loginf = LoginForm()	
+			return render(request, 'website/contacto.html', {'base_template':'website/base.html','loginf': loginf,'contactof':contactof})
 
 
 def descargas(request):

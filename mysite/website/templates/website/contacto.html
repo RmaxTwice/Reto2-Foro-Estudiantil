@@ -11,38 +11,28 @@
 			<div class="col-md-10 col-md-offset-1">
 				<form>
 					<fieldset>
-					<legend>Datos de Contacto</legend>
-	                    <div class="form-group">    
-	                        <label>Nombre:</label>
-	                        <input type="text" class="form-control" name="name" required>
-	                    </div>
-	                    <div class="form-group">
-	                        <label>Correo electr&oacute;nico:</label>
-	                        <input type="email" class="form-control" name="email" placeholder="ejemplo@email.com" required>
-	                    </div>
-	                    <div class="form-group">    
-	                        <label>Tel&eacute;fono:</label>
-	                        <input type="tel" class="form-control" name="telefono" required>
-	                    </div>
+						<legend>Datos de Contacto</legend>
+						{% for field in contactof %}
+                            <div class="form-group">
+                                {{ field.label_tag }}<br>
 
-	                </fieldset>
+                                {% if field.errors %}
+                                    <div class="form-errors">
+                                    {% for error in field.errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                    </div>
+                                {% endif %}
 
-	                <fieldset>
-	                	<legend>Raz&oacute;n de contacto</legend>
-	                    <div class="form-group">    
-	                        <label>Tema:</label>
-	                        <input type="text" class="form-control" name="tema" required>
-	                    </div>
-	                    <div class="form-group">
-	                        <label>Mensaje:</label><br>
-	                        <textarea id="mensaje" name="mensaje" placeholder="Escriba su mensaje aqu&iacute;.." style="height:200px; width: 100%"></textarea>
-	                    </div>
-	                </fieldset>
+                                {{ field }}
+                            </div>
+                        {% endfor %}
+	            
 	                <div class="row">
                         <div class="col-md-8 col-md-offset-2">
                             <button type="submit" class="btn btn-success btn-lg btn-block submit-btn">Contactar</button>
                         </div>
-                     </div>
+                    </div>
 				</form>
 			</div>
 		</div>

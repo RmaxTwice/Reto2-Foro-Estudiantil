@@ -1,5 +1,5 @@
 from django import forms
-from .models import Perfil
+from .models import Perfil, Solicitud
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import ugettext_lazy as _ #usado para personalizar las etiquetas de los formularios
@@ -63,7 +63,9 @@ class RegisterPerfilForm(forms.ModelForm):
 				   'respuesta1': forms.TextInput(attrs={'class':'form-control'}),\
 				   'respuesta2': forms.TextInput(attrs={'class':'form-control'}),\
 				   }
-		#validators = {'cedula':[cedula_validator]}
+	
+	#def clean_cedula(self):
+
 
 
 # Formulario para registrar un usuario
@@ -79,7 +81,7 @@ class RegisterUserForm(UserCreationForm):
 		self.fields['password1'].widget = forms.PasswordInput(attrs={'class':'form-control'})
 		self.fields['last_name'].widget = forms.TextInput(attrs={'class':'form-control'})
 		self.fields['first_name'].widget = forms.TextInput(attrs={'class':'form-control'})
-		self.fields['email'].widget = forms.TextInput(attrs={'class':'form-control', 'placeholder':'ejemplo@email.com'})
+		self.fields['email'].widget = forms.EmailInput(attrs={'class':'form-control', 'placeholder':'ejemplo@email.com'})
 
 	
 	first_name = forms.CharField(label="Nombre",max_length=30, help_text="Opcional", required = False)
@@ -116,8 +118,39 @@ class RegisterUserForm(UserCreationForm):
 			raise forms.ValidationError("¡Las contraseñas nos son iguales!")
 		return password2
 
+# Formulario para realizar una solicitud de contacto.
+class ContactanosForm(forms.ModelForm):
 
-		#'password': forms.PasswordInput(),\
+	def __init__(self, *args, **kwargs):
+		super(ContactanosForm, self).__init__(*args, **kwargs)
+		self.fields['nombre'].widget = forms.TextInput(attrs={'class':'form-control'})
+		self.fields['email'].widget = forms.EmailInput(attrs={'class':'form-control', 'placeholder':'ejemplo@email.com'})
+		self.fields['telefono'].widget = forms.TextInput(attrs={'class':'form-control'})
+		self.fields['titulo'].widget = forms.TextInput(attrs={'class':'form-control'})
+		self.fields['cuerpo'].widget = forms.Textarea(attrs={'class':'form-control'})
+		
+
+
+
+	class Meta:
+		model = Solicitud
+		fields = ['nombre','email','telefono','titulo','cuerpo']
+		labels = { 'nombre': _('Nombre'),\
+				   'email': _('Correo electrónico'),\
+				   'telefono': _('Teléfono de contacto'),\
+				   'titulo': _('Razón de contacto'),\
+				   'cuerpo': _('Mensaje'),\
+				 }
+
+		#widgets = {'cedula': forms.TextInput(attrs={'placeholder': 'V-12345 ó E-12345','class':'form-control'}),\
+				   #'pregunta1': forms.TextInput(attrs={'class':'form-control'}),\
+				   #'pregunta2': forms.TextInput(attrs={'class':'form-control'}),\
+		#		   'respuesta1': forms.TextInput(attrs={'class':'form-control'}),\
+		#		   'respuesta2': forms.TextInput(attrs={'class':'form-control'}),\
+		#		   }
+
+
+
 
 #	def __init__(self, *args, **kwargs):
 #		super(RegisterUserForm, self).__init__(*args, **kwargs)

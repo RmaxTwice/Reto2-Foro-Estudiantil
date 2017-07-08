@@ -48,10 +48,6 @@ class LoginForm(forms.Form):
 # Formulario para registrar un perfil de usuario
 class RegisterPerfilForm(forms.ModelForm):
 
-	def __init__(self, *args, **kwargs):
-		super(RegisterPerfilForm, self).__init__(*args, **kwargs)
-		self.fields['cedula'].validators = [cedula_validator]
-
 	class Meta:
 		model = Perfil
 		fields = ['facultad','cedula','pregunta1','respuesta1','pregunta2','respuesta2']

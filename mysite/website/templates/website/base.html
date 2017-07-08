@@ -3,7 +3,9 @@
 <!-- Autor: Rafael Vasquez -->
 <html>
     <head>
-        <title>Forum Estudiantil</title>
+        <title>
+            {% block title %}{% endblock %}-Forum Estudiantil
+        </title>
         <meta charset="utf-8">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
         <link href="{% static 'website/css/style.css' %}" type="text/css" rel="stylesheet">

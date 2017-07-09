@@ -386,6 +386,10 @@ div.login-form fieldset{
     padding-left: 20px;
 }
 
+.instrucciones{
+    margin-top: 20px;
+}
+
 /*---------------  Estilo de las secciones de Perfil y Modificacion de perfiles  ---------------*/
 
 .perfil-container{

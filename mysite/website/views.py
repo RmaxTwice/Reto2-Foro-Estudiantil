@@ -1,11 +1,12 @@
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import RequestContext, loader
-from .forms import LoginForm, RegisterPerfilForm, RegisterUserForm, ContactanosForm
+from .forms import LoginForm, RegisterPerfilForm, RegisterUserForm, ContactanosForm, RecuperarPassForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import connection, transaction
 from .models import Solicitud
+from django.core.mail import send_mail
 
 
 
@@ -66,8 +67,16 @@ def registrar(request):
 
 		return render(request, 'website/registrar.html', {'registeruserform':ruf, 'registerperfilform':rpf,'loginf': loginf})
 
+def recuperar_pass(request):
 
-
+	if request.method == 'POST':
+		recuperarf = RecuperarPassForm(request.POST or None)
+		if recuperarf.is_valid():
+			print (recuperarf.email)	
+		return HttpResponseRedirect('/')
+	loginf = LoginForm()
+	recuperarf = RecuperarPassForm()
+	return render(request, 'website/recuperar_contraseña.html', {'recuperarf':recuperarf, 'loginf':loginf})
 
 def contacto(request):
 	if request.method == 'POST':
@@ -118,7 +127,7 @@ def pedir_asesoria(request):
 		return render(request, 'website/pedir_asesoria.html',{'base_template':'website/base_usuario.html'})
 
 	
-@login_required() 
+@login_required(login_url='/') 
 def perfil(request):
 	contexto_comun = {'nombre': request.user.first_name,\
 	  				   'apellido': request.user.last_name,\
@@ -148,19 +157,19 @@ def sugerencia(request):
 	else:
 		return render(request, 'website/sugerencia.html',{'base_template':'website/base_usuario.html'})
 
-@login_required()
+@login_required(login_url='/')
 def solicitud_detalle(request,id_sol):
 	if request.user.perfil.es_supervisor:
 		#Buscamos las solicitudes libres
 
 		solicitud = get_object_or_404(Solicitud, pk=id_sol)
 		#solicitud = Solicitud.objects.get(pk=id_sol)
-		
-		return render(request, 'website/solicitud_detalle.html', {'solicitud':solicitud})
-	else:
-		raise Http404("Esta página no existe")
 
-@login_required()
+		return render(request, 'website/solicitud_detalle.html', {'solicitud':solicitud})
+	
+	raise Http404("Esta página no existe")
+
+@login_required(login_url='/')
 def administrar_solicitudes(request):
 
 	if request.user.perfil.es_supervisor:
@@ -170,8 +179,8 @@ def administrar_solicitudes(request):
 		contexto = {'solLibres':libres}
 		return render(request, 'website/administrar_solicitudes.html',contexto)
 
-	else:
-		raise Http404("Esta página no existe")
+	
+	raise Http404("Esta página no existe")
 
 
 

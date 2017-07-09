@@ -14,7 +14,20 @@ my_default_errors = {
     'invalid': 'Por favor ingrese un valor válido.'
 }
 
+# Formulario para recuperar contraseña.
+class RecuperarPassForm(forms.Form):
 
+	def __init__(self, *args, **kwargs):
+		super(RecuperarPassForm, self).__init__(*args, **kwargs)
+		self.fields['email'].widget = forms.EmailInput(attrs={'class':'form-control', 'placeholder':'ejemplo@email.com'})
+
+	email = forms.EmailField(label="Correo Electrónico", max_length=254, required=True)
+
+	def clean(self):
+		em = self.cleaned_data.get('email')
+		if not User.objects.filter(email=ema).exists():
+			raise forms.ValidationError( _("Este correo electrónico no esta en uso."),code='email_not_used')
+		return em
 
 # Formulario para iniciar sesión.
 class LoginForm(forms.Form):

@@ -27,13 +27,6 @@
 						<td class="s-pendiente">Pendiente</td>
 						<td class="s-pendiente">15/06/2017</td>
 					</tr>
-					<tr>
-						<td class=""><a href="#">Contacto</a></td>
-						<td class="">Buenos dias...</td>
-						<td class="">Contacto</td>
-						<td class="">Atendida</td>
-						<td class="">14/06/2017</td>
-					</tr>
 				</table>
 			</div>
 		</div>
@@ -53,27 +46,13 @@
 					</tr>
 					{% for sol in solLibres %}
 						<tr>
-							<td><a href="{{ sol.id }}">{{ sol.titulo }}</a></td>
+							<td><a href="{{ sol.id }}">{{ sol.titulo|truncatewords:6 }}</a></td>
 							<td>{{ sol.cuerpo|truncatewords:12 }}</td>
 							<td>{{ sol.tipo }}</td>
 							<td>{{ sol.estado }}</td>
 							<td>{{ sol.fecha_enviado.day }}/{{ sol.fecha_enviado.month }}/{{ sol.fecha_enviado.year }}</td>
 						</tr>
 					{% endfor %}
-					<tr>
-						<td ><a href="#">Dudas sobre materia</a></td>
-						<td >Hola, queria preguntar acerca de...</td>
-						<td >Asesor&iacute;a</td>
-						<td >Libre</td>
-						<td >15/06/2017</td>
-					</tr>
-					<tr>
-						<td class=""><a href="#">Contacto</a></td>
-						<td class="">Buenos dias...</td>
-						<td class="">Contacto</td>
-						<td class="">Libre</td>
-						<td class="">14/06/2017</td>
-					</tr>
 				</table>
 			</div>
 		</div>

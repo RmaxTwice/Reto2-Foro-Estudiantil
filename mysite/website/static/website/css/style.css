@@ -26,13 +26,14 @@ nav.topnav{
     z-index: 9;
 }
 
+
+
 .topnav a {
-    display: block;
+    
     color: #222;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-
 }
 
 .topnav a.left{
@@ -91,12 +92,17 @@ nav a.icon:hover{
     height: 50px;
     width: 50px;
     margin-right: 10px;
-
 }
 
 nav h4{
     margin-right: 15px;
     padding-top: 5px; 
+}
+
+p.user-name{
+    padding-top: 15px;
+    font-size: 14px;
+    padding-right: 5px;
 }
 
 .dropdown-menu{
@@ -142,6 +148,10 @@ nav h4{
     }
 
     div.relleno.responsive{
+        display: none;
+    }
+
+    ul#menu-usuario{
         display: none;
     }
 
@@ -219,6 +229,8 @@ div#header-principal p{
     background-color: #0099cc;
     color: #fff;
 }
+
+
 /*
 @media all and (max-width: : 1175px) {
     div#header-principal p{
@@ -233,7 +245,10 @@ div#header-principal p{
 /*---------------  SECCIONES DE CONTENIDO Y ACCESO  ---------------*/
 
 .invisible{
+    visibility: hidden;
     display: none;
+    padding: 0;
+    margin: 0;
 }
 
 

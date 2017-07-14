@@ -26,9 +26,12 @@
             <a href="/informacion" class="left menu-link">Informaci&oacute;n</a>
             <a href="/pedir_asesoria" class="left menu-link">Asesoramiento</a>
             <a href="/sugerencia" class="left menu-link">Sugerencias</a>
+            <a href="/administrar_solicitudes" id="h-link-admin-sol" class="left menu-link invisible">Administrar Solicitudes</a>
+            <a href="/perfil" id="h-link-perfil" class="left menu-link invisible">Mi perfil</a>
+            <a href="/logmeout" id="h-link-logout" class="left menu-link invisible">Cerrar Sesión</a>
             <a href="javascript:void(0);" class="icon" >&#9776;</a>
             <div class="clipfix">
-            <ul class="nav navbar-nav pull-right nav-menu-options">
+            <ul class="nav navbar-nav pull-right nav-menu-options" id="menu-usuario">
                 <li><img src=" {% static 'website/img/avatar.gif' %}" class="hidden-xs hidden-sm nav-avatar"></li>
                 <li><h4 class="user-name">{{ user.username }}</h4></li>
                 <li class = "user-options-menu">
@@ -42,12 +45,6 @@
                             </li>
                             <li>
                                 <a class="menu-link" href="/administrar_solicitudes/">Administrar Solicitudes <span class="glyphicon glyphicon-envelope"></span></a>
-                            </li>
-                            <li>
-                                <a class="menu-link" href="/administrar_descargas/">Administrar Descargas <span class="glyphicon glyphicon-download-alt"></span></a>
-                            </li>
-                            <li>
-                                <a class="menu-link" href="/administrar_informacion/">Administrar Informaci&oacute;n <span class="glyphicon glyphicon-pencil"></span></a>
                             </li>
                             <li>
                                 <a class="menu-link" href="{% url 'logmeout' %}">Cerrar Sesi&oacute;n <span class="glyphicon glyphicon-log-out"></span></a>

@@ -152,6 +152,10 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'fields': 'id,name,email', 
 }
 
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/opciones/'
+#SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/opciones/'
+SOCIAL_AUTH_RAISE_EXCEPTIONS = False
+
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',
     'social_core.pipeline.social_auth.social_uid',

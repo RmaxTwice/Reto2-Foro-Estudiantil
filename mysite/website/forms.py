@@ -1,10 +1,11 @@
 from django import forms
 from .models import Perfil, Solicitud
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AdminPasswordChangeForm, PasswordChangeForm
 from django.utils.translation import ugettext_lazy as _ #usado para personalizar las etiquetas de los formularios
 from django.core.validators import RegexValidator 		#usado para validar el formato del campo 'cedula'
 from django.contrib.auth import authenticate
+
 
 #Validador para las cedulas
 cedula_validator = RegexValidator(r"[VE]-\d+","Ingrese una cédula en el formato indicado. V-#### ó E-####", code="invalid")
@@ -13,6 +14,20 @@ my_default_errors = {
     'required': 'Por favor rellene este campo.',
     'invalid': 'Por favor ingrese un valor válido.'
 }
+
+#Formulario para cambiar la contraseña.
+class CambiarPassForm(PasswordChangeForm):
+	def __init__(self, *args, **kwargs):
+		super(CambiarPassForm, self).__init__(*args, **kwargs)
+		self.fields['old_password'].label = "Contraseña actual"
+		self.fields['new_password1'].label = "Nueva contraseña"
+		self.fields['new_password2'].label = "Confirmar contraseña"
+
+		self.fields['old_password'].widget = forms.PasswordInput(attrs={'class':'form-control'})
+		self.fields['new_password1'].widget = forms.PasswordInput(attrs={'class':'form-control'})
+		self.fields['new_password2'].widget = forms.PasswordInput(attrs={'class':'form-control'})
+
+		
 
 # Formulario para recuperar contraseña.
 class RecuperarPassForm(forms.Form):

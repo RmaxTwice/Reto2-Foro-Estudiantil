@@ -1,12 +1,15 @@
-from django.shortcuts import render, render_to_response, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.template import RequestContext, loader
-from .forms import LoginForm, RegisterPerfilForm, RegisterUserForm, ContactanosForm, RecuperarPassForm
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from django.db import connection, transaction
-from .models import Solicitud
 from django.core.mail import send_mail
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
+from django.db import connection, transaction
+from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.shortcuts import render, render_to_response, redirect, get_object_or_404
+from django.template import RequestContext, loader
+from social_django.models import UserSocialAuth
+from .forms import LoginForm, CambiarPassForm, RegisterPerfilForm, RegisterUserForm, ContactanosForm, RecuperarPassForm
+from .models import Solicitud
 
 
 
@@ -191,3 +194,44 @@ def administrar_solicitudes(request):
 
 	
 	raise Http404("Esta página no existe")
+
+@login_required
+def opciones(request):
+	user = request.user
+
+	try:
+		facebook_login = user.social_auth.get(provider='facebook')
+	except UserSocialAuth.DoesNotExist:
+		facebook_login = None
+
+	can_disconnect = (user.social_auth.count() > 1 or user.has_usable_password())
+
+	if request.user.perfil.es_supervisor:
+		return render(request, 'website/opciones.html',{'base_template':'website/base_admin.html','facebook_login': facebook_login,'can_disconnect': can_disconnect})
+	else:
+		return render(request, 'website/opciones.html',{'base_template':'website/base_usuario.html','facebook_login': facebook_login,'can_disconnect': can_disconnect})
+
+
+@login_required
+def password(request):
+	if request.user.has_usable_password():
+		PasswordForm = CambiarPassForm
+	else:
+		PasswordForm = AdminPasswordChangeForm
+
+	if request.method == 'POST':
+		form = PasswordForm(request.user, request.POST)
+		if form.is_valid():
+			form.save()
+			update_session_auth_hash(request, form.user)
+			messages.success(request, 'Tu contraseña ha sido actualizada exitosamente!')
+			return redirect('password')
+		else:
+			messages.error(request, 'Por favor corrige el error señalado.')
+	else:
+		form = PasswordForm(request.user)
+
+	if request.user.perfil.es_supervisor:
+		return render(request, 'website/password.html',{'base_template':'website/base_admin.html','form': form})
+	else:
+		return render(request, 'website/password.html',{'base_template':'website/base_usuario.html','form': form})

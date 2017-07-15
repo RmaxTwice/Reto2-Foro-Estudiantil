@@ -52,9 +52,19 @@ def registrar(request):
 		rpf = RegisterPerfilForm(request.POST, prefix='userprofile')
 		if ruf.is_valid() * rpf.is_valid():
 			user = ruf.save()
-			userprofile = rpf.save(commit=False)
-			userprofile.user = user
+			userprofile = user.perfil
+			print (userprofile)
+			userprofile.cedula = rpf.cleaned_data['cedula']
+			userprofile.facultad = rpf.cleaned_data['facultad']
+			userprofile.pregunta1 = rpf.cleaned_data['pregunta1']
+			userprofile.respuesta1 = rpf.cleaned_data['respuesta1']
+			userprofile.pregunta2 = rpf.cleaned_data['pregunta2']
+			userprofile.respuesta2 = rpf.cleaned_data['respuesta2']
 			userprofile.save()
+
+			#userprofile = rpf.save(commit=False)
+			#userprofile.user = user
+			
 			return HttpResponseRedirect('/')
 		else:
 			return render(request,'website/registrar.html', {'registeruserform':ruf, 'registerperfilform':rpf,'loginf': loginf})
@@ -181,6 +191,3 @@ def administrar_solicitudes(request):
 
 	
 	raise Http404("Esta página no existe")
-
-
-

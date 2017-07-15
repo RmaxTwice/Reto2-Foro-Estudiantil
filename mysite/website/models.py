@@ -82,6 +82,16 @@ class Perfil(models.Model):
 	def __str__(self):
 		return 'Perfil del usuario: %s' % self.user.username
 
+#esta seccion de codigo nos permite crear un modelo perfil
+#por cada usuario creado en el sistema automaticamente.
+def crear_perfil(sender, **kwargs):
+	user = kwargs["instance"]
+	if kwargs["created"]:
+		user_profile = Perfil(user=user)
+		user_profile.save()
+		
+post_save.connect(crear_perfil, sender=User)
+
 #Modelo para representar posts de la seccion informativa.
 class Informacion(models.Model):
 
@@ -183,14 +193,7 @@ class Solicitud(models.Model):
 #	def __str__(self):
 #		return self.titulo
 
-#esta seccion de codigo nos permite crear un modelo perfil
-#por cada usuario creado en el sistema automaticamente.
-#def crear_perfil(sender, **kwargs):
-#    user = kwargs["instance"]
-#    if kwargs["created"]:
-#        user_profile = Perfil(user=user)
-#        user_profile.save()
-#post_save.connect(crear_perfil, sender=User)
+
 
 #Modelo abstracto para representar las solicitudes de los usuarios.
 #class Solicitud(models.Model):

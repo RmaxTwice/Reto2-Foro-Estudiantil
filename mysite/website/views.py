@@ -8,7 +8,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.template import RequestContext, loader
 from social_django.models import UserSocialAuth
-from .forms import LoginForm, CambiarPassForm, RegisterPerfilForm, RegisterUserForm, ContactanosForm, RecuperarPassForm
+from .forms import LoginForm, CambiarPassForm, DefinirPassForm, RegisterPerfilForm, RegisterUserForm, ContactanosForm, RecuperarPassForm
 from .models import Solicitud
 
 
@@ -217,17 +217,15 @@ def password(request):
 	if request.user.has_usable_password():
 		PasswordForm = CambiarPassForm
 	else:
-		PasswordForm = AdminPasswordChangeForm
+		PasswordForm = DefinirPassForm
 
 	if request.method == 'POST':
 		form = PasswordForm(request.user, request.POST)
 		if form.is_valid():
 			form.save()
 			update_session_auth_hash(request, form.user)
-			messages.success(request, 'Tu contraseña ha sido actualizada exitosamente!')
-			return redirect('password')
-		else:
-			messages.error(request, 'Por favor corrige el error señalado.')
+			#messages.success(request, 'Tu contraseña ha sido actualizada exitosamente!')
+			return redirect('/opciones')
 	else:
 		form = PasswordForm(request.user)
 

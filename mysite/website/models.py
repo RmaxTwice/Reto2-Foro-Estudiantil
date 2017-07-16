@@ -72,6 +72,7 @@ class Perfil(models.Model):
 	carrera = models.CharField(max_length=50,blank=True, default='')
 
 	fallos_login = models.PositiveSmallIntegerField(default=0)
+	esta_bloqueado = models.BooleanField(default=False)
 
 	es_supervisor = models.BooleanField(default=False)
 

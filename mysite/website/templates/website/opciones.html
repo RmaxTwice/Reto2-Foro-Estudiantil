@@ -4,30 +4,35 @@
 {% block title %}Opciones de Cuenta{% endblock %}
 
 {% block content %}
-
+	<div class="relleno"></div>
 	<h1> Opciones de Cuenta </h1>
 
-	
 	<div class="container main-container">
+		<h2 class="text-center">Redes Sociales</h2>
+		<hr>
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
-				<h4> Facebook </h4>
-				<hr>
+				<h3> Facebook </h3>
 				{% if facebook_login %}
-					<p>Conectado como: <a href="https://facebook.com/{{ facebook_login.extra_data.id }}/" target="_blank">{{ facebook_login.extra_data.id }}</a></p>
+					<p>Conectado a facebook con el siguiente usuario: <a href="https://facebook.com/{{ facebook_login.extra_data.id }}/" target="_blank">Link a perfil de Facebook.</a></p>
 						{% if can_disconnect %}
+							
 							<form method="post" action="{% url 'social:disconnect' 'facebook' %}">
-							{% csrf_token %}
-							<button type="submit">Desconectarse de Facebook</button>
+								{% csrf_token %}
+
+								<button type="submit" class="btn btn-warning btn-block btn-lg">Desconectarse de <i class="fa fa-facebook-square" style="font-size:24px"></i>acebook</button>
 							</form>
+						
 						{% else %}
-							<button type="button" disabled>Desconectarse de Facebook</button>
-							<p style="color: red">Debes <a href="{% url 'password' %}">definir una contraseña</a> para tu cuenta antes de desconectarte de Facebook</p>
+							<button type="button" disabled class="btn btn-warning btn-block btn-lg">Desconectarse de <i class="fa fa-facebook-square" style="font-size:24px"></i>acebook</button>
+							<br>
+							<p style="color: red; font-size: 18px;" class="text-center">Debes <a href="{% url 'password' %}">definir una contraseña</a> para tu cuenta antes de desconectarte de Facebook</p>
 						{% endif %}
 				{% else %}
 					<a href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary btn-block btn-lg">Conectarse a <i class="fa fa-facebook-square" style="font-size:24px"></i>acebook</a>
 					
 				{% endif %}
+				<div class="relleno"></div>
 			</div>
 		</div>	
 	</div>

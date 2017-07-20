@@ -91,6 +91,13 @@ def recuperar_pass(request):
 	recuperarf = RecuperarPassForm()
 	return render(request, 'website/recuperar_contraseña.html', {'recuperarf':recuperarf, 'loginf':loginf})
 
+def desbloquear_cuenta(request):
+	user = request.user
+	user.perfil.esta_bloqueado = False
+	user.save()
+	return HttpResponseRedirect('/')
+
+
 def contacto(request):
 	if request.method == 'POST':
 		cform = ContactanosForm(request.POST or None)
@@ -112,26 +119,15 @@ def contacto(request):
 			return render(request, 'website/contacto.html', {'base_template':'website/base.html','loginf': loginf,'contactof':contactof})
 
 
-def descargas(request):
-	if request.user.perfil.es_supervisor:
-		return render(request, 'website/descargas.html',{'base_template':'website/base_admin.html'})
-	else:
-		return render(request, 'website/descargas.html',{'base_template':'website/base_usuario.html'})
 
-def descargas_materia(request):
-	if request.user.perfil.es_supervisor:
-		return render(request, 'website/descarga_detalle.html',{'base_template':'website/base_admin.html'})
-	else:
-		return render(request, 'website/descarga_detalle.html',{'base_template':'website/base_usuario.html'})
-
-
+@login_required(login_url='/') 
 def informacion(request):
 	if request.user.perfil.es_supervisor:
 		return render(request, 'website/informacion.html',{'base_template':'website/base_admin.html'})
 	else:
 		return render(request, 'website/informacion.html',{'base_template':'website/base_usuario.html'})
 
-
+@login_required(login_url='/') 
 def pedir_asesoria(request):
 	 
 	if request.user.perfil.es_supervisor:
@@ -163,7 +159,7 @@ def perfil(request):
 	else:
 		return render(request, 'website/perfil.html',contexto_comun)
 
-
+@login_required(login_url='/') 
 def sugerencia(request):
 	if request.user.perfil.es_supervisor:
 		return render(request, 'website/sugerencia.html',{'base_template':'website/base_admin.html'})

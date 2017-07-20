@@ -15,10 +15,9 @@ urlpatterns = [
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         auth_views.password_reset_confirm, name='password_reset_confirm'),
     url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
-
+    url(r'^desbloqueo/$', views.desbloquear_cuenta, name='desbloquear_cuenta'),
     url(r'^perfil/$', views.perfil, name='perfil'),
-    url(r'^descargas/facultad$', views.descargas, name='descargas'),
-    url(r'^descargas/facultad/materia$', views.descargas_materia, name='descargas_detalle'),
+    
     url(r'^informacion/$', views.informacion, name='informacion'),
     url(r'^contacto/$', views.contacto, name='contacto'),
     url(r'^sugerencia/$', views.sugerencia, name='sugerencia'),

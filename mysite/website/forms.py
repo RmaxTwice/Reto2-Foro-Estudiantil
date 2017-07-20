@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate
 
 
 #Validador para las cedulas
-cedula_validator = RegexValidator(r"[VE]-\d+","Ingrese una cédula en el formato indicado. V-#### ó E-####", code="invalid")
+cedula_validator = RegexValidator(r"[VE]-\d{1,9}","Ingrese una cédula en el formato indicado. V-#### ó E-####", code="invalid")
 
 my_default_errors = {
     'required': 'Por favor rellene este campo.',
@@ -68,10 +68,27 @@ class LoginForm(forms.Form):
 		username = self.cleaned_data.get('usernameLogin')
 		password = self.cleaned_data.get('passwordLogin')
 		user = authenticate(username=username, password=password)
+		sancionado = User.objects.get(username = username)
+		perfil = Perfil.objects.get(user = sancionado.id)
+
+		if sancionado and perfil.esta_bloqueado:
+			raise forms.ValidationError(_("El usuario ingresado esta bloqueado!"), code='bloqueado')
+
 		if not user:
+			if sancionado and not perfil.esta_bloqueado:
+				perfil.fallos_login +=  1
+				perfil.save()
+
+				if perfil.fallos_login > 4:
+					perfil.esta_bloqueado = True
+					perfil.fallos_login = 0
+				
+				perfil.save()
+				print (perfil.esta_bloqueado)
 			raise forms.ValidationError(_("Información inválida. Por favor intente de nuevo."), code='invalid')
-		elif not user.is_active:
-			raise forms.ValidationError(_("Ese nombre de usuario esta bloqueado!"), code='bloqueado')
+		else:
+			perfil.fallos_login = 0
+			perfil.save()
 		return self.cleaned_data
 
 	def login(self, request):
@@ -82,7 +99,7 @@ class LoginForm(forms.Form):
 
 # Formulario para registrar un perfil de usuario
 class RegisterPerfilForm(forms.ModelForm):
-
+	
 	class Meta:
 		model = Perfil
 		fields = ['facultad','cedula','pregunta1','respuesta1','pregunta2','respuesta2']
@@ -92,15 +109,20 @@ class RegisterPerfilForm(forms.ModelForm):
 				   'pregunta2': _('Pregunta de seguridad 2'),\
 				   'respuesta2': _('Respuesta'),\
 				 }
-		widgets = {'cedula': forms.TextInput(attrs={'placeholder': 'V-12345 ó E-12345','class':'form-control'}),\
+		widgets = {'cedula': forms.TextInput(attrs={'placeholder': 'V-12345 ó E-12345','class':'form-control', 'pattern':"[VE]-\d{1,9}"}),\
 				   #'pregunta1': forms.TextInput(attrs={'class':'form-control'}),\
 				   #'pregunta2': forms.TextInput(attrs={'class':'form-control'}),\
 				   'respuesta1': forms.TextInput(attrs={'class':'form-control'}),\
 				   'respuesta2': forms.TextInput(attrs={'class':'form-control'}),\
 				   }
 	
-	#def clean_cedula(self):
+	def clean_cedula(self):
+		ci = self.cleaned_data["cedula"]
 
+		if Perfil.objects.filter(cedula=ci).exists():
+			raise forms.ValidationError( _("Esta cédula de idetificación ya está en uso, ingrese otra"),code='duplicate_cedula')
+		
+		return ci
 
 
 # Formulario para registrar un usuario

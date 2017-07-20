@@ -38,10 +38,19 @@
                         <fieldset>
                             <legend>Datos de Seguridad</legend>
                             {% for field in registerperfilform %}
-                            <div class="form-group">
-                                {{ field.label_tag }}<br>
-                                {{ field }}
-                            </div>
+                                <div class="form-group">
+                                    {{ field.label_tag }}<br>
+
+                                    {% if field.errors %}
+                                        <div class="form-errors">
+                                        {% for error in field.errors %}
+                                            <p>{{ error }}</p>
+                                        {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    
+                                    {{ field }}
+                                </div>
                             {% endfor %}
                         </fieldset>
                         

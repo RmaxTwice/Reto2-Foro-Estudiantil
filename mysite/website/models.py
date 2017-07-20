@@ -114,18 +114,6 @@ class Informacion(models.Model):
 	def __str__(self):
 		return '%s: %s' % (self.facultad,self.titulo)
 
-#Modelo para representar los recursos descargables de la sección de Descargas.
-class Descarga(models.Model):
-
-	TIPOS = (('G','Guia'),('E','Exámen'),('L','Laboratorio'),('B','Libro'))
-
-	nombre = models.CharField(max_length=100)
-	tipo = models.CharField(max_length=1, choices=TIPOS, default='G')
-	materia = models.ForeignKey(Materia, blank=True)
-	fecha_publicado = models.DateTimeField(_('Fecha Publicado'), default=timezone.now)
-
-	def __str__(self):
-		return self.nombre
 
 #Modelo para representar las solicitudes de asesoría, contacto y sugerencias de los usuarios.
 class Solicitud(models.Model):

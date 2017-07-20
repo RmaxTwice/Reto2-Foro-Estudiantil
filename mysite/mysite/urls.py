@@ -31,4 +31,6 @@ urlpatterns = [
 
 	#urls para la app principal 'website' van aca.
 	url(r'^', include('website.urls')),
+    #urls para la app de descargas van aca.
+    url(r'^', include('descargas.urls')),
 ]

@@ -180,11 +180,11 @@ class ContactanosForm(forms.ModelForm):
 
 	def __init__(self, *args, **kwargs):
 		super(ContactanosForm, self).__init__(*args, **kwargs)
-		self.fields['nombre'].widget = forms.TextInput(attrs={'class':'form-control'})
+		self.fields['nombre'].widget = forms.TextInput(attrs={'class':'form-control','placeholder':'Nombre de contacto'})
 		self.fields['email'].widget = forms.EmailInput(attrs={'class':'form-control', 'placeholder':'ejemplo@email.com'})
-		self.fields['telefono'].widget = forms.TextInput(attrs={'class':'form-control'})
-		self.fields['titulo'].widget = forms.TextInput(attrs={'class':'form-control'})
-		self.fields['cuerpo'].widget = forms.Textarea(attrs={'class':'form-control'})
+		self.fields['telefono'].widget = forms.TextInput(attrs={'class':'form-control','placeholder':'Teléfono de contacto sin espacios o guiones'})
+		self.fields['titulo'].widget = forms.TextInput(attrs={'class':'form-control',})
+		self.fields['cuerpo'].widget = forms.Textarea(attrs={'class':'form-control','placeholder':'Escriba su mensaje aquí'})
 		
 
 

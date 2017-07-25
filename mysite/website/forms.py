@@ -122,7 +122,7 @@ class RegisterPerfilForm(forms.ModelForm):
 		if Perfil.objects.filter(cedula=ci).exists():
 			raise forms.ValidationError( _("Esta cédula de idetificación ya está en uso, ingrese otra"),code='duplicate_cedula')
 		
-		return ci
+		return ci or None
 
 
 # Formulario para registrar un usuario

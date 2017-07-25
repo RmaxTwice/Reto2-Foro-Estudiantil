@@ -69,8 +69,7 @@ def registrar(request):
 			# Ahora una vez creado el usuario y su perfil procederemos a enviarle un mensaje
 			# al email indicado con sus credenciales.
 			context = {'username':ruf.cleaned_data['username'] ,'password':ruf.cleaned_data['password1']}
-			print (context['username'])
-			print (context['password'])
+			
 			msg_plain = render_to_string('registration/user_register_email.txt', context)
 			msg_html = render_to_string('registration/user_register_email.html', context)
 			

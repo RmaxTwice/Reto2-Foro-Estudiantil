@@ -7,6 +7,7 @@ from django.db import connection, transaction
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.template import RequestContext, loader
+from django.template.loader import render_to_string
 from social_django.models import UserSocialAuth
 from .forms import LoginForm, CambiarPassForm, DefinirPassForm, RegisterPerfilForm, RegisterUserForm, ContactanosForm, RecuperarPassForm
 from .models import Solicitud
@@ -65,8 +66,22 @@ def registrar(request):
 			userprofile.respuesta2 = rpf.cleaned_data['respuesta2']
 			userprofile.save()
 
-			#userprofile = rpf.save(commit=False)
-			#userprofile.user = user
+			# Ahora una vez creado el usuario y su perfil procederemos a enviarle un mensaje
+			# al email indicado con sus credenciales.
+			context = {'username':ruf.cleaned_data['username'] ,'password':ruf.cleaned_data['password1']}
+			print (context['username'])
+			print (context['password'])
+			msg_plain = render_to_string('registration/user_register_email.txt', context)
+			msg_html = render_to_string('registration/user_register_email.html', context)
+			
+			send_mail(
+					'Bienvenido a Foro-Estudiantil!', 	#titulo
+					msg_plain,							#mensaje txt
+					'foroestudiantil2@gmail.com',		#email de envio
+					[user.email],						#destinatario
+					html_message=msg_html,				#mensaje en html
+					)
+
 			
 			return HttpResponseRedirect('/')
 		else:

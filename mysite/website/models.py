@@ -58,7 +58,7 @@ class Perfil(models.Model):
 		verbose_name_plural = "perfiles"
 
 	user = models.OneToOneField(User, on_delete = models.CASCADE)
-	cedula = models.CharField(max_length=20, default='', unique=True)
+	cedula = models.CharField(max_length=20, default="3231", unique=True)
 	desc = models.TextField(max_length=500,default='' ,blank=True)
 		#preguntas y respuestas de seguridad.
 	pregunta1 = models.CharField(max_length=15,choices=PREGUNTAS, default='libro')

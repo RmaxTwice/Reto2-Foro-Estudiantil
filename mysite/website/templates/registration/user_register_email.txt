@@ -1,0 +1,12 @@
+Bienvenido a Foro-Estudiantil!
+
+Tu registro de usuario ha sido exitoso, a continuación indicaremos tus credenciales:
+
+Usuario: {{ context.username }}
+Contraseña: {{ context.password }}
+
+Te sugerimos que, la próxima vez que inicies sesión en nuestro sitio web, actualices
+tu información de pérfil completa para poderte ofrecer un servicio más comodo y personalizado.
+
+Sinceramente,
+El equipo de Foro-Estudiantil.

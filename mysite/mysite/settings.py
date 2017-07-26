@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'website',
     'descargas',
     'informacion',
+    'solicitudes',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

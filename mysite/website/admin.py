@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Facultad, Perfil, Materia, Escuela, Solicitud
+from .models import Facultad, Perfil, Materia, Escuela
 
 
 
@@ -12,4 +12,4 @@ admin.site.register(Materia)
 #admin.site.register(Informacion)
 #admin.site.register(Asesoria)
 #admin.site.register(Sugerencia)
-admin.site.register(Solicitud)
+#admin.site.register(Solicitud)

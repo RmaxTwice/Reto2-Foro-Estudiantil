@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<!-- Autor: Rafael Vasquez -->
+<html>
+    <head>
+        <title>
+            {% block title %}{% endblock %}-Forum Estudiantil
+        </title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
+        <link href="{% static 'website/css/style.css' %}" type="text/css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat|Open+Sans|Raleway|Roboto" rel="stylesheet">
+        <!-- Libreria de jQuery y Bootstrap -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- Script personalizado-->
+        <script type="text/javascript" src="{% static 'website/js/myjsscript.js' %}"></script>
+    </head>
+    <body>
+        <!-----------------  Barra de Navegacion  ------------------>
+        <nav id="myTopnav" class="topnav">
+            <a href="/" class="left brand"><strong>Forum-Estudiantil</strong></a>
+            <a href="#"  onclick="document.getElementById('login_modal').style.display='block'" class="left menu-link">Descargas</a>
+            <a href="#"  onclick="document.getElementById('login_modal').style.display='block'" class="left menu-link">Informaci&oacute;n</a>
+            <a href="#"  onclick="document.getElementById('login_modal').style.display='block'" class="left menu-link">Asesoramiento</a>
+            <a href="#"  onclick="document.getElementById('login_modal').style.display='block'" class="left menu-link">Sugerencias</a>
+            <a href="/registrar" class="right menu-link">Registrarse</a>
+            <a href="#" class="right menu-link" id="login_btn" onclick="document.getElementById('login_modal').style.display='block'" >Iniciar Sesión</a>
+            <a href="javascript:void(0);" class="icon" >&#9776;</a>
+
+            <!--
+            <ul>
+                <li class="brand"><a href="/"><h4> Forum-Estudiantil </h4></a></li>
+            </ul>
+            <ul>
+                <li class="menu-link "><a href="/descargas">Descargas</a></li>
+                <li class="menu-link "><a href="/informacion">Informaci&oacute;n</a></li>
+                <li class="menu-link "><a href="/pedir_asesoria">Asesoramiento</a></li>
+                <li class="menu-link"><a href="/sugerencia">Sugerencias</a></li>
+            </ul>
+            <ul class="right-links">
+                <li class="menu-link"><a href="/registrar">Registrarse</a></li>
+                <li class="menu-link"><a href="#">Iniciar Sesión</a></li>
+            </ul>
+            <a href="javascript:void(0);" class="icon" >&#9776;</a>
+            -->
+        </nav>
+        <div class="relleno"></div>
+
+        
+        <!-------------------  Aca va el contenido ----------------- -->
+        {% block content %}
+        {% endblock %}
+
+        <!-----------------  pie de pagina  ------------------>
+        <footer>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-5 col-sm-offset-1 col-md-4 col-md-offset-2 col-lg-4 col-lg-offset-2 col-xl-4 col-xl-offset-2 creditos">
+                        <p> © 2017 Todos los derechos reservados.</p>
+                        <p> Diseño y c&oacute;digo creados por Rafael Vasquez</p>
+                    </div>
+                    <div class="col-xs-6 col-sm-4 col-sm-offset-2 col-md-4 col-md-offset-2 col-lg-4 col-lg-offset-2 col-xl-4 col-xl-offset-2">
+                        <a href="/contacto" class="btn-contacto">Cont&aacute;ctanos</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        
+        <!-------------------  Modal de log in ----------------- -->
+        <div id="login_modal" class="modal" >
+            <div class="container login_box">
+                <div class="row">
+                    <div class="col-md-1 col-md-offset-11">
+                        <span onclick="document.getElementById('login_modal').style.display='none'"
+class="close" title="Close Modal">&times;</span>
+                    </div>
+                </div>
+                 
+
+                <div class="row twt-btn">
+                    <div class="col-md-12">
+                        <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary btn-block btn-lg">Inicia sesi&oacute;n con <i class="fa fa-facebook" style="font-size:24px"></i>acebook</a>
+                    </div>
+                </div>
+
+                <div class="row login-form">
+                <div class="col-md-12">
+                    <form action="/logmein/" method="POST" >
+                        {% csrf_token %}
+
+                        {% for field in loginf %}
+                            <div class="form-group">
+                                {{ field.label_tag }}<br>
+                                {{ field }}
+                                {{ field.errors }}
+                            </div>
+                        {% endfor %}
+                        <!--
+                        <div class="form-group">
+                            <label>Nombre de Usuario</label>
+                            <input type="text" placeholder="Igrese su Usuario" class="form-control" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label >Contraseña</label>
+                            <input type="password" placeholder="Igrese su contraseña" class="form-control" name="pass" required>
+                        </div>
+                        
+                        {{ form.as_p }}
+                        -->
+                        {% if loginf.non_field_errors %}
+                            <ul class='form-errors'>
+                                {% for error in loginf.non_field_errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                        <div class="row">                     
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-success btn-lg btn-block submit-btn">Ingresar</button>
+                            </div>
+                        </div>
+                    </form>
+                 
+                    <a class="link-discreto" href="/password_reset">Olvide mi contraseña</a>
+                 
+                    <a class="link-discreto" href="">Desbloquear mi cuenta</a>
+                </div>
+</div>
+            </div>
+        </div>
+
+
+        <script>
+            
+            var modal = document.getElementById('login_modal');
+
+            // Cuando el usuario haga click en el modal este se cierra.
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script> 
+
+    </body>
+</html>

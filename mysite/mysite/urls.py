@@ -35,4 +35,6 @@ urlpatterns = [
     url(r'^', include('descargas.urls')),
         #urls para la app de 'informacion' van aca.
     url(r'^', include('informacion.urls')),
+        #urls para la app de 'informacion' van aca.
+    url(r'^', include('solicitudes.urls')),
 ]

@@ -18,7 +18,6 @@ urlpatterns = [
     url(r'^desbloqueo/$', views.desbloquear_cuenta, name='desbloquear_cuenta'),
     url(r'^perfil/$', views.perfil, name='perfil'),
     
-    url(r'^informacion/$', views.informacion, name='informacion'),
     url(r'^contacto/$', views.contacto, name='contacto'),
     url(r'^sugerencia/$', views.sugerencia, name='sugerencia'),
     url(r'^pedir_asesoria/$', views.pedir_asesoria, name='pedir_asesoria'),

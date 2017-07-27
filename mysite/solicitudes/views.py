@@ -118,8 +118,10 @@ def administrar_solicitudes(request):
 		#Buscamos las solicitudes libres
 
 		libres = Solicitud.objects.filter(estado = 'Libre').order_by('fecha_enviado')
-		reservadas = Solicitud.objects.filter(supervisor = request.user).order_by('fecha_enviado')
-		contexto = {'solLibres':libres, 'solReservadas': reservadas}
+		pendientes = Solicitud.objects.filter(supervisor = request.user, estado = 'Pendiente').order_by('fecha_enviado')
+		atendidas = Solicitud.objects.filter(supervisor = request.user, estado = 'Atendida').order_by('fecha_enviado')
+
+		contexto = {'solLibres':libres, 'solReservadas': pendientes, 'solAtendidas': atendidas}
 		return render(request, 'solicitudes/administrar_solicitudes.html',contexto)
 
 	

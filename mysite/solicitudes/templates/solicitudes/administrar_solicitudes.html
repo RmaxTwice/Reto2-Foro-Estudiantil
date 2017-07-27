@@ -22,7 +22,7 @@
 					</tr>
 
 					{% for sol in solReservadas %}
-						<tr {% if sol.estado == 'Pendiente' %} class="pendiente" {% endif %}>
+						<tr class="pendiente">
 							<td><a href="{{ sol.get_absolute_url }}">{{ sol.titulo|truncatewords:6 }}</a></td>
 							<td>{{ sol.cuerpo|truncatewords:12 }}</td>
 							<td>{{ sol.tipo }}</td>
@@ -30,10 +30,23 @@
 							<td>{{ sol.fecha_enviado.day }}/{% if sol.fecha_enviado.month < 10 %}0{% endif %}{{ sol.fecha_enviado.month }}/{{ sol.fecha_enviado.year }}</td>
 						</tr>
 					{% endfor %}
+
+					{% for sol in solAtendidas %}
+						<tr>
+							<td><a href="{{ sol.get_absolute_url }}">{{ sol.titulo|truncatewords:6 }}</a></td>
+							<td>{{ sol.cuerpo|truncatewords:12 }}</td>
+							<td>{{ sol.tipo }}</td>
+							<td>{{ sol.estado }}</td>
+							<td>{{ sol.fecha_enviado.day }}/{% if sol.fecha_enviado.month < 10 %}0{% endif %}{{ sol.fecha_enviado.month }}/{{ sol.fecha_enviado.year }}</td>
+						</tr>
+					{% endfor %}
+
 				</table>
 
-				{% if not solReservadas %}
+				{% if not solReservadas and not solAtendidas %}
+					
 					<h4 class="text-center" style = "color: red;">No hay solicitudes que desplegar.</h4>
+					
 				{% endif %}
 
 

@@ -17,7 +17,7 @@ class Solicitud(models.Model):
 
 	nombre = models.CharField(max_length=50)
 	email = models.EmailField(max_length=50)
-	telefono = models.CharField(max_length=30, blank=True, default='')
+	telefono = models.CharField(max_length=20, blank=True, default='')
 	titulo = models.CharField(max_length=125)
 	cuerpo = models.TextField(max_length=255)
 	fecha_enviado = models.DateTimeField(_('Fecha Enviado'), default=timezone.now)
@@ -29,3 +29,6 @@ class Solicitud(models.Model):
 
 	def __str__(self):
 		return self.titulo
+
+	def get_absolute_url(self):
+		return "%i/" % self.id

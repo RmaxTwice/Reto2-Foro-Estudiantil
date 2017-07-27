@@ -20,17 +20,26 @@
 						<th>Estado</th>
 						<th>Fecha</th>
 					</tr>
-					<tr>
-						<td class="s-pendiente"><a href="#">Dudas sobre materia</a></td>
-						<td class="s-pendiente">Hola, queria preguntar acerca de...</td>
-						<td class="s-pendiente">Asesor&iacute;a</td>
-						<td class="s-pendiente">Pendiente</td>
-						<td class="s-pendiente">15/06/2017</td>
-					</tr>
+
+					{% for sol in solReservadas %}
+						<tr {% if sol.estado == 'Pendiente' %} class="pendiente" {% endif %}>
+							<td><a href="{{ sol.get_absolute_url }}">{{ sol.titulo|truncatewords:6 }}</a></td>
+							<td>{{ sol.cuerpo|truncatewords:12 }}</td>
+							<td>{{ sol.tipo }}</td>
+							<td>{{ sol.estado }}</td>
+							<td>{{ sol.fecha_enviado.day }}/{% if sol.fecha_enviado.month < 10 %}0{% endif %}{{ sol.fecha_enviado.month }}/{{ sol.fecha_enviado.year }}</td>
+						</tr>
+					{% endfor %}
 				</table>
+
+				{% if not solReservadas %}
+					<h4 class="text-center" style = "color: red;">No hay solicitudes que desplegar.</h4>
+				{% endif %}
+
+
 			</div>
 		</div>
-
+		<div class="relleno"></div>
 		<h3 class="text-center sol-title2">Solicitudes por Atender</h3>
 		<hr>
 		<br>
@@ -46,14 +55,15 @@
 					</tr>
 					{% for sol in solLibres %}
 						<tr>
-							<td><a href="{{ sol.id }}">{{ sol.titulo|truncatewords:6 }}</a></td>
+							<td><a href="{{ sol.get_absolute_url }}">{{ sol.titulo|truncatewords:6 }}</a></td>
 							<td>{{ sol.cuerpo|truncatewords:12 }}</td>
 							<td>{{ sol.tipo }}</td>
 							<td>{{ sol.estado }}</td>
-							<td>{{ sol.fecha_enviado.day }}/{{ sol.fecha_enviado.month }}/{{ sol.fecha_enviado.year }}</td>
+							<td>{{ sol.fecha_enviado.day }}/{% if sol.fecha_enviado.month < 10 %}0{% endif %}{{ sol.fecha_enviado.month }}/{{ sol.fecha_enviado.year }}</td>
 						</tr>
 					{% endfor %}
 				</table>
+
 			</div>
 		</div>
 	</div>

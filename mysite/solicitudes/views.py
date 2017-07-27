@@ -55,14 +55,71 @@ def solicitud_detalle(request,id_sol):
 	
 	raise Http404("Esta página no existe")
 
+
+@login_required(login_url='/')
+def solicitud_reservar(request,id_sol):
+	if request.user.perfil.es_supervisor:
+		
+			#Buscamos las solicitud indicada a reservar en la base de datos.
+		solicitud = get_object_or_404(Solicitud, pk=id_sol)
+		#solicitud = Solicitud.objects.get(pk=id_sol)
+
+			#Asignamos el supervisor que la reservo directo a la solicitud
+		solicitud.supervisor = request.user
+
+			# y alteramos su estado.
+		solicitud.estado = 'Pendiente'
+		solicitud.save()
+		return HttpResponseRedirect('/administrar_solicitudes')
+		#return render(request, 'solicitudes/solicitud_detalle.html', {'solicitud':solicitud})
+	
+	raise Http404("Esta página no existe")
+
+@login_required(login_url='/')
+def solicitud_liberar(request,id_sol):
+	if request.user.perfil.es_supervisor:
+		
+			#Buscamos las solicitud indicada a liberar en la base de datos.
+		solicitud = get_object_or_404(Solicitud, pk=id_sol)
+		#solicitud = Solicitud.objects.get(pk=id_sol)
+
+			#Desasignamos el supervisor de la solicitud
+		solicitud.supervisor = None
+
+			# y alteramos su estado.
+		solicitud.estado = 'Libre'
+		solicitud.save()
+		return HttpResponseRedirect('/administrar_solicitudes')
+		#return render(request, 'solicitudes/solicitud_detalle.html', {'solicitud':solicitud})
+	
+	raise Http404("Esta página no existe")
+
+@login_required(login_url='/')
+def solicitud_completa(request,id_sol):
+	if request.user.perfil.es_supervisor:
+		
+			#Buscamos las solicitud indicada a liberar en la base de datos.
+		solicitud = get_object_or_404(Solicitud, pk=id_sol)
+		#solicitud = Solicitud.objects.get(pk=id_sol)
+
+			# y alteramos su estado.
+		solicitud.estado = 'Atendida'
+		solicitud.save()
+		return HttpResponseRedirect('/administrar_solicitudes')
+		#return render(request, 'solicitudes/solicitud_detalle.html', {'solicitud':solicitud})
+	
+	raise Http404("Esta página no existe")
+
+
 @login_required(login_url='/')
 def administrar_solicitudes(request):
 
 	if request.user.perfil.es_supervisor:
 		#Buscamos las solicitudes libres
 
-		libres = Solicitud.objects.filter(estado = 'Libre')
-		contexto = {'solLibres':libres}
+		libres = Solicitud.objects.filter(estado = 'Libre').order_by('fecha_enviado')
+		reservadas = Solicitud.objects.filter(supervisor = request.user).order_by('fecha_enviado')
+		contexto = {'solLibres':libres, 'solReservadas': reservadas}
 		return render(request, 'solicitudes/administrar_solicitudes.html',contexto)
 
 	

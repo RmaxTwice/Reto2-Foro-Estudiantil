@@ -1,12 +1,11 @@
 from django import forms
-from .models import Perfil
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm, AdminPasswordChangeForm, PasswordChangeForm
-from django.utils.translation import ugettext_lazy as _ #usado para personalizar las etiquetas de los formularios
-from django.core.validators import RegexValidator 		#usado para validar el formato del campo 'cedula'
 from django.contrib.auth import authenticate
-
-
+from django.contrib.auth.forms import UserCreationForm, AdminPasswordChangeForm, PasswordChangeForm
+from django.contrib.auth.models import User
+from django.core.validators import RegexValidator 		#usado para validar el formato del campo 'cedula'
+from django.forms.models import inlineformset_factory
+from django.utils.translation import ugettext_lazy as _ #usado para personalizar las etiquetas de los formularios
+from .models import Perfil
 #Validador para las cedulas
 cedula_validator = RegexValidator(r"[VE]-\d{1,9}","Ingrese una cédula en el formato indicado. V-#### ó E-####", code="invalid")
 
@@ -27,6 +26,7 @@ class CambiarPassForm(PasswordChangeForm):
 		self.fields['new_password1'].widget = forms.PasswordInput(attrs={'class':'form-control'})
 		self.fields['new_password2'].widget = forms.PasswordInput(attrs={'class':'form-control'})
 
+# Formulario para definir la contraseña de una cuenta por primera vez.
 class DefinirPassForm(AdminPasswordChangeForm):
 	def __init__(self, *args, **kwargs):
 		super(DefinirPassForm, self).__init__(*args, **kwargs)
@@ -114,6 +114,7 @@ class RegisterPerfilForm(forms.ModelForm):
 				   #'pregunta2': forms.TextInput(attrs={'class':'form-control'}),\
 				   'respuesta1': forms.TextInput(attrs={'class':'form-control'}),\
 				   'respuesta2': forms.TextInput(attrs={'class':'form-control'}),\
+				   'facultad': forms.Select(attrs={'class':'form-control'}),\
 				   }
 	
 	def clean_cedula(self):
@@ -175,32 +176,21 @@ class RegisterUserForm(UserCreationForm):
 			raise forms.ValidationError("¡Las contraseñas nos son iguales!")
 		return password2
 
+class EditarUserForm(forms.ModelForm):
+	class Meta:
+		model = User
+		fields = ['first_name', 'last_name']
+		labels = { 'first_name': _('Nombre'),'last_name': _('Apellido'),}
+		widgets = {'first_name': forms.TextInput(attrs={'class':'form-control'}),
+				   'last_name': forms.TextInput(attrs={'class':'form-control'}),}
 
-		#widgets = {'cedula': forms.TextInput(attrs={'placeholder': 'V-12345 ó E-12345','class':'form-control'}),\
-				   #'pregunta1': forms.TextInput(attrs={'class':'form-control'}),\
-				   #'pregunta2': forms.TextInput(attrs={'class':'form-control'}),\
-		#		   'respuesta1': forms.TextInput(attrs={'class':'form-control'}),\
-		#		   'respuesta2': forms.TextInput(attrs={'class':'form-control'}),\
-		#		   }
-
-
-
-
-#	def __init__(self, *args, **kwargs):
-#		super(RegisterUserForm, self).__init__(*args, **kwargs)
-#		self.fields['email'].required = True
-
-
-#	class Meta:
-#		model = User
-#		fields = ['first_name','last_name','username','password','email']
-#		labels = { 'username': _('Usuario'),\
-#				   'password': _('Contraseña'),\
-#				   'email': _('Email'),\
-#				   'first_name': _('Nombre'),\
-#				   'last_name':_('Apellido'), 
-#				 }
-#		widgets = { 'password': forms.PasswordInput(),\
-#					'email': forms.TextInput(attrs={'placeholder': 'ejemplo@email.com'}),}
-#		#self.fields['email'].required = True
-		#email.widget.attrs["required"] = "required"
+class EditarPerfilForm(forms.ModelForm):
+	class Meta:
+		model = Perfil
+		fields = ['facultad', 'escuela', 'carrera', 'desc' ]
+		labels = { 'desc': _('Acerca de mi'),}
+		widgets = {'carrera': forms.TextInput(attrs={'class':'form-control'}),\
+				   'escuela': forms.Select(attrs={'class':'form-control'}),\
+				   'desc': forms.Textarea(attrs={'class':'form-control', 'rows':'6'}),\
+				   'facultad': forms.Select(attrs={'class':'form-control'}),\
+				   }

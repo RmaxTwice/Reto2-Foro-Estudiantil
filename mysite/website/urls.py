@@ -16,6 +16,7 @@ urlpatterns = [
         auth_views.password_reset_confirm, name='password_reset_confirm'),
     url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
     url(r'^desbloqueo/$', views.desbloquear_cuenta, name='desbloquear_cuenta'),
-    url(r'^perfil/$', views.perfil, name='perfil'),
+    url(r'^perfil/$', views.perfil, name='ver_perfil'),
+    url(r'^perfil/editar$', views.perfil_editar, name='editar_perfil'),
     
 ]

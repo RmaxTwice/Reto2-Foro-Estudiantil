@@ -3,14 +3,16 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
+from django.contrib.auth.models import User
 from django.db import connection, transaction
+from django.forms.models import inlineformset_factory
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.template import RequestContext, loader
 from django.template.loader import render_to_string
 from social_django.models import UserSocialAuth
-from .forms import LoginForm, CambiarPassForm, DefinirPassForm, RegisterPerfilForm, RegisterUserForm, RecuperarPassForm
-
+from .forms import LoginForm, CambiarPassForm, DefinirPassForm, RegisterPerfilForm, RegisterUserForm, RecuperarPassForm, EditarUserForm, EditarPerfilForm
+from .models import Perfil
 
 
 
@@ -134,6 +136,17 @@ def perfil(request):
 		return render(request, 'website/perfil.html',contexto_admin)
 	else:
 		return render(request, 'website/perfil.html',contexto_comun)
+
+# Vista que se encarga de el manejo de la edicion de los perfiles de usuario.
+@login_required(login_url='/') 
+def perfil_editar(request):
+	user_form =	EditarUserForm(instance=request.user)
+	perfil_form = EditarPerfilForm(instance=request.user.perfil)
+
+	if request.user.perfil.es_supervisor:
+		return render(request, 'website/perfil_editar.html',{'base_template':'website/base_admin.html', 'uf':user_form,'pf':perfil_form })
+	else:
+		return render(request, 'website/perfil_editar.html',{'base_template':'website/base_usuario.html', 'uf':user_form,'pf':perfil_form })
 
 
 @login_required

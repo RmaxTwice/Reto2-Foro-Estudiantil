@@ -417,8 +417,12 @@ div.login-form fieldset{
     background-color: #fff;
 }
 
+div.avatar-container{
+    padding-top: 7%;
+}
+
 .main-avatar{
-    height: 150px;
+    height: 180px;
     border-radius: 10px;
     border: 0.5px solid #999;
     margin-bottom: 20px;

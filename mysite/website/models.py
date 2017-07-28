@@ -60,7 +60,7 @@ class Perfil(models.Model):
 	user = models.OneToOneField(User, on_delete = models.CASCADE)
 	cedula = models.CharField(max_length=20, unique=True, null=True, default=None)
 	desc = models.TextField(max_length=500,default='' ,blank=True)
-	foto = models.ImageField(upload_to="user_avatars", default="media/user_avatars/default.gif")
+	foto = models.ImageField(blank=True, upload_to="user_avatars", default="user_avatars/default.gif")
 		#preguntas y respuestas de seguridad.
 	pregunta1 = models.CharField(max_length=15,choices=PREGUNTAS, default='libro')
 	respuesta1= models.CharField(max_length=100,default='')

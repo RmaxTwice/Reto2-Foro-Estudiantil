@@ -187,8 +187,8 @@ class EditarUserForm(forms.ModelForm):
 class EditarPerfilForm(forms.ModelForm):
 	class Meta:
 		model = Perfil
-		fields = ['facultad', 'escuela', 'carrera', 'desc' ]
-		labels = { 'desc': _('Acerca de mi'),}
+		fields = ['foto','facultad', 'escuela', 'carrera', 'desc' ]
+		labels = { 'desc': _('Acerca de mi'),'foto': _('Avatar'),}
 		widgets = {'carrera': forms.TextInput(attrs={'class':'form-control'}),\
 				   'escuela': forms.Select(attrs={'class':'form-control'}),\
 				   'desc': forms.Textarea(attrs={'class':'form-control', 'rows':'6'}),\

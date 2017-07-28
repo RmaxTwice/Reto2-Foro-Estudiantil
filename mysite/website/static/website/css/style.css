@@ -423,7 +423,7 @@ div.avatar-container{
 
 .main-avatar{
     height: 180px;
-    border-radius: 10px;
+    border-radius: 5px;
     border: 0.5px solid #999;
     margin-bottom: 20px;
 }

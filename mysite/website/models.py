@@ -60,6 +60,7 @@ class Perfil(models.Model):
 	user = models.OneToOneField(User, on_delete = models.CASCADE)
 	cedula = models.CharField(max_length=20, unique=True, null=True, default=None)
 	desc = models.TextField(max_length=500,default='' ,blank=True)
+	foto = models.ImageField(upload_to="user_avatars", default="media/user_avatars/default.gif")
 		#preguntas y respuestas de seguridad.
 	pregunta1 = models.CharField(max_length=15,choices=PREGUNTAS, default='libro')
 	respuesta1= models.CharField(max_length=100,default='')
@@ -94,63 +95,3 @@ def crear_perfil(sender, **kwargs):
 post_save.connect(crear_perfil, sender=User)
 
 
-
-
-#Modelo para representar las solicitudes de asesoría de los usuarios.
-#class Asesoria(models.Model):
-
-#	ESTADOS = (('L','Libre'),('P','Pendiente'),('A','Atendida'))
-
-#	titulo = models.CharField(max_length=150)
-#	cuerpo = models.TextField(max_length=500)
-#	fecha_enviado = models.DateTimeField(_('Fecha Enviado'), default=timezone.now)
-#	supervisor = models.ForeignKey(User, blank=True,related_name='asesor',limit_choices_to={'profile__es_supervisor': True})
-#	user = models.ForeignKey(User,related_name='asesorado')
-#	materia = models.ForeignKey(Materia)
-	
-#	def __str__(self):
-#		return self.titulo
-
-#Modelo para representar las sugerencias de los usuarios.
-#class Sugerencia(models.Model):
-
-#	ESTADOS = (('L','Libre'),('P','Pendiente'),('A','Atendida'))
-#
-#	titulo = models.CharField(max_length=150)
-#	cuerpo = models.TextField(max_length=500)
-#	fecha_enviado = models.DateTimeField(_('Fecha Enviado'), default=timezone.now)
-#	supervisor = models.ForeignKey(User, blank=True,related_name='recipiente',limit_choices_to={'perfil__es_supervisor': True})
-#	user = models.ForeignKey(User,related_name='sugeridor')
-#
-#	def __str__(self):
-#		return self.titulo
-
-#Modelo para representar las solicitudes de contacto de los usuarios.
-#class Contacto(models.Model):
-
-#	ESTADOS = (('L','Libre'),('P','Pendiente'),('A','Atendida'))
-
-#	titulo = models.CharField(max_length=150)
-#	cuerpo = models.TextField(max_length=500)
-#	fecha_enviado = models.DateTimeField(_('Fecha Enviado'), default=timezone.now)
-#	supervisor = models.ForeignKey(User, blank=True,related_name='supervisor',limit_choices_to={'profile__es_supervisor': True})
-#	user = models.ForeignKey(User,related_name='contactador')
-
-#	def __str__(self):
-#		return self.titulo
-
-
-
-#Modelo abstracto para representar las solicitudes de los usuarios.
-#class Solicitud(models.Model):
-#	ESTADOS = (('L','Libre'),('P','Pendiente'),('A','Atendida'))
-#
-#	titulo = models.CharField(max_length=150)
-#	cuerpo = models.TextField(max_length=500)
-#	fecha_enviado = models.DateTimeField(_('Fecha Enviado'), default=timezone.now)
-#	supervisor = models.ForeignKey(User, blank=True,related_name='recipiente')
-#
-#	def get_username(self):
-#		return self.titulo
-#	class Meta:
-#		abstract = True

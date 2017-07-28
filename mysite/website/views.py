@@ -48,6 +48,24 @@ def logmeout(request):
 
 	return render(request, 'website/index_noauth.html')
 
+# Vista que se encarga de el manejo de la edicion de los perfiles de usuario.
+@login_required(login_url='/') 
+def perfil_editar(request):
+	
+	if request.method == 'POST':
+		uf = EditarUserForm(request.POST, request.FILES, instance=request.user,prefix='user')
+		pf = EditarPerfilForm(request.POST, request.FILES, instance=request.user.perfil,prefix='perfil')
+		if uf.is_valid() * pf.is_valid():
+			uf.save()
+			pf.save()
+		return HttpResponseRedirect('/perfil')
+
+	user_form =	EditarUserForm(instance=request.user,prefix='user')
+	perfil_form = EditarPerfilForm(instance=request.user.perfil,prefix='perfil')
+	if request.user.perfil.es_supervisor:
+		return render(request, 'website/perfil_editar.html',{'base_template':'website/base_admin.html', 'uf':user_form,'pf':perfil_form })
+	else:
+		return render(request, 'website/perfil_editar.html',{'base_template':'website/base_usuario.html', 'uf':user_form,'pf':perfil_form })
 
 # View para desplegar el formulario de registro de usuarios y atender las peticiones de registro
 def registrar(request):
@@ -59,7 +77,7 @@ def registrar(request):
 		if ruf.is_valid() * rpf.is_valid():
 			user = ruf.save()
 			userprofile = user.perfil
-			print (userprofile)
+
 			userprofile.cedula = rpf.cleaned_data['cedula']
 			userprofile.facultad = rpf.cleaned_data['facultad']
 			userprofile.pregunta1 = rpf.cleaned_data['pregunta1']
@@ -137,16 +155,6 @@ def perfil(request):
 	else:
 		return render(request, 'website/perfil.html',contexto_comun)
 
-# Vista que se encarga de el manejo de la edicion de los perfiles de usuario.
-@login_required(login_url='/') 
-def perfil_editar(request):
-	user_form =	EditarUserForm(instance=request.user)
-	perfil_form = EditarPerfilForm(instance=request.user.perfil)
-
-	if request.user.perfil.es_supervisor:
-		return render(request, 'website/perfil_editar.html',{'base_template':'website/base_admin.html', 'uf':user_form,'pf':perfil_form })
-	else:
-		return render(request, 'website/perfil_editar.html',{'base_template':'website/base_usuario.html', 'uf':user_form,'pf':perfil_form })
 
 
 @login_required

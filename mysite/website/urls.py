@@ -1,5 +1,7 @@
-from django.conf.urls import url
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls import url
+from django.views.static import serve
 from . import views
 
 
@@ -20,3 +22,10 @@ urlpatterns = [
     url(r'^perfil/editar$', views.perfil_editar, name='editar_perfil'),
     
 ]
+
+# URL para servir las imagenes de forma local durante debug.
+
+if settings.DEBUG:
+    urlpatterns += [
+        url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT,}),
+    ]

@@ -183,3 +183,7 @@ LOGIN_URL = 'home'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'home'
 
+# Configuracion de la carpeta de media en la que se guardaran los archivos subidos por los usuarios
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media' )
+MEDIA_URL = '/media/'

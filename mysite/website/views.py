@@ -186,7 +186,24 @@ def password(request):
 		if form.is_valid():
 			form.save()
 			update_session_auth_hash(request, form.user)
-			#messages.success(request, 'Tu contraseña ha sido actualizada exitosamente!')
+
+			#Envio de email con las nuevas credenciales al correo electrónico del usuario
+			user = User.objects.get(pk=request.user.id)
+
+			context = {'username': user.username ,'password':form.cleaned_data['new_password1']}
+			
+			msg_plain = render_to_string('registration/user_pwdreset_email.txt', context)
+			msg_html = render_to_string('registration/user_pwdreset_email.html', context)
+			
+			send_mail(
+					'Cambio de Contraseña - Foro-Estudiantil!', #titulo
+					msg_plain,									#mensaje txt
+					'foroestudiantil2@gmail.com',				#email de envio
+					[user.email],								#destinatario
+					html_message=msg_html,						#mensaje en html
+					)
+
+
 			return redirect('/opciones')
 	else:
 		form = PasswordForm(request.user)

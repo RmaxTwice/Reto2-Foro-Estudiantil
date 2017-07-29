@@ -4,15 +4,14 @@
 {% block title %}Opciones de Cuenta{% endblock %}
 
 {% block content %}
-	<div class="relleno"></div>
+	
 	<h1> Opciones de Cuenta </h1>
 
 	<div class="container main-container">
-		<h2 class="text-center">Redes Sociales</h2>
-		<hr>
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
-				<h3> Facebook </h3>
+				<h2 class="text-center">Redes Sociales</h2>
+				<h3 class="text-center"> Facebook </h3>
 				{% if facebook_login %}
 					<p>Conectado a facebook con el siguiente usuario: <a href="https://facebook.com/{{ facebook_login.extra_data.id }}/" target="_blank">Link a perfil de Facebook.</a></p>
 						{% if can_disconnect %}
@@ -20,7 +19,7 @@
 							<form method="post" action="{% url 'social:disconnect' 'facebook' %}">
 								{% csrf_token %}
 
-								<button type="submit" class="btn btn-warning btn-block btn-lg">Desconectarse de <i class="fa fa-facebook-square" style="font-size:24px"></i>acebook</button>
+								<button type="submit" class="btn btn-warning btn-block btn-lg outline">Desconectarse de Facebook <i class="fa fa-facebook-square" style="font-size:24px"></i></button>
 							</form>
 						
 						{% else %}
@@ -29,11 +28,21 @@
 							<p style="color: red; font-size: 18px;" class="text-center">Debes <a href="{% url 'password' %}">definir una contraseña</a> para tu cuenta antes de desconectarte de Facebook</p>
 						{% endif %}
 				{% else %}
-					<a href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary btn-block btn-lg">Conectarse a <i class="fa fa-facebook-square" style="font-size:24px"></i>acebook</a>
+					<a href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary btn-block btn-lg outline">Conectarse a Facebook <i class="fa fa-facebook-square" style="font-size:24px"></i></a>
 					
 				{% endif %}
 				<div class="relleno"></div>
 			</div>
-		</div>	
+		</div>
+	
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<h2 class="text-center"> Contraseña </h2>
+				<form action="password">
+					<button type="submit" class="btn btn-info btn-block btn-lg">Cambiar Contraseña</button>
+				</form>
+			</div>
+		</div>
+		<hr>
 	</div>
 {% endblock %}

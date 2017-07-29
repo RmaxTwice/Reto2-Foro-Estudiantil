@@ -193,4 +193,5 @@ class EditarPerfilForm(forms.ModelForm):
 				   'escuela': forms.Select(attrs={'class':'form-control'}),\
 				   'desc': forms.Textarea(attrs={'class':'form-control', 'rows':'6'}),\
 				   'facultad': forms.Select(attrs={'class':'form-control'}),\
+				   'foto': forms.FileInput(attrs={'class':'form-control'}),\
 				   }

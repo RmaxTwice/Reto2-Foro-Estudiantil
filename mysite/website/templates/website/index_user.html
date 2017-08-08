@@ -27,7 +27,7 @@
         <div class="relleno"></div>
         <!-----------------  Secciones del portal web  ------------------>
         
-        <h1>Servicios</h1>
+        <h1>Nuestros servicios</h1>
         <section id="promo-descargas">
             <div class="container-fluid">
                 <div class="row">
@@ -40,7 +40,7 @@
                             En esta secci&oacute;n podras encontrar diversos materiales de estudio de diferentes asignaturas
                             como guias, talleres, laboratorios, libros y m&aacute;s!
                         </p>
-                        <form action="/descargas/facultad">
+                        <form action="{% url 'descargas:facultad' %}">
                             <button type="submit" class="btn btn-primary outline" >
                                 Descargas <span class="big-icon glyphicon glyphicon-download-alt"></span>
                             </button>
@@ -62,7 +62,11 @@
                             Accede ahora y podr&aacute;s obtener la informaci&oacute;n m&aacute;s detallada y actualizada 
                             sobre tesis, pasant&iacute;as, servicio comunitario y m&aacute;s!
                         </p>
-                        <button class="btn btn-warning outline"> Informaci&oacute;n <span class="big-icon glyphicon glyphicon-info-sign"></span></button>
+                        <form action="{% url 'informacion:facultad' %}">
+                            <button type="submit" class="btn btn-warning outline">
+                                Informaci&oacute;n <span class="big-icon glyphicon glyphicon-info-sign"></span>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -78,7 +82,11 @@
                         <p>
                             ¿Tienes dudas o preguntas sobre materias o algun proceso universitario? En esta secci&oacute;n podremos ayudarte a encontrar la respuesta que buscas.
                         </p>
-                        <button class="btn btn-primary outline"> Asesoramiento <span class="big-icon glyphicon glyphicon-education"></span></button>
+                        <form action="{% url 'solicitudes:asesoria' %}">
+                            <button type="submit" class="btn btn-primary outline">
+                                Asesoramiento <span class="big-icon glyphicon glyphicon-education"></span>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -94,7 +102,11 @@
                         <p>
                             Ayudanos a mejorar, estamos siempre abiertos a escuchar sugerencias, haz escuchar tu voz!
                         </p>
-                        <button class="btn btn-warning outline"> Sugerencias <span class="big-icon glyphicon glyphicon-pencil"></span></button>
+                        <form action="{% url 'solicitudes:sugerencia' %}">
+                            <button type="submit" class="btn btn-warning outline">
+                                Sugerencias <span class="big-icon glyphicon glyphicon-pencil"></span>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

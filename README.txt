@@ -11,3 +11,16 @@ la comunidad universitaria.
 En este directorio se encuentras 2 secciones, la primera es el directorio de "Artefactos", donde se guardaran todos los diagramas relevantes al proyecto.
 
 El segundo "mysite",contiene todos los archivos y codigo del sitio web desarrollado como un proyecto de Django.
+
+Apps Actuales:
+	* Website: App principal o Core.
+	* Solicitudes
+	* Descargas
+	* Informacion
+
+Funcionalidades por implementar:
+    - Desbloqueo de cuentas de usuarios.
+    - Solicitudes de Asesoría
+    - Generacion de solicitudes con su respectivo pdf al usuario.
+    - Subida , administracion y descargas de material descargable de materias.
+    - Creacion y Lectura de segmentos de información

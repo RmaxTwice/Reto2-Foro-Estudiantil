@@ -26,8 +26,6 @@ urlpatterns = [
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
-    url(r'^opciones/$', app_views.opciones, name='opciones'),
-    url(r'^opciones/password/$', app_views.password, name='password'),
 
 	   #urls para la app principal 'website' van aca.
 	url(r'^', include('website.urls')),

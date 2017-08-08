@@ -21,31 +21,16 @@
     <body>
         <!-----------------  Barra de Navegacion  ------------------>
         <nav id="myTopnav" class="topnav">
-            <a href="/" class="left brand"><strong>Forum-Estudiantil</strong></a>
+            <a href="{% url 'website:home' %}" class="left brand"><strong>Forum-Estudiantil</strong></a>
             <a href="#"  onclick="document.getElementById('login_modal').style.display='block'" class="left menu-link">Descargas</a>
             <a href="#"  onclick="document.getElementById('login_modal').style.display='block'" class="left menu-link">Informaci&oacute;n</a>
             <a href="#"  onclick="document.getElementById('login_modal').style.display='block'" class="left menu-link">Asesoramiento</a>
             <a href="#"  onclick="document.getElementById('login_modal').style.display='block'" class="left menu-link">Sugerencias</a>
-            <a href="/registrar" class="right menu-link">Registrarse</a>
+            <a href="{% url 'website:registrar' %}" class="right menu-link">Registrarse</a>
             <a href="#" class="right menu-link" id="login_btn" onclick="document.getElementById('login_modal').style.display='block'" >Iniciar Sesión</a>
             <a href="javascript:void(0);" class="icon" >&#9776;</a>
 
-            <!--
-            <ul>
-                <li class="brand"><a href="/"><h4> Forum-Estudiantil </h4></a></li>
-            </ul>
-            <ul>
-                <li class="menu-link "><a href="/descargas">Descargas</a></li>
-                <li class="menu-link "><a href="/informacion">Informaci&oacute;n</a></li>
-                <li class="menu-link "><a href="/pedir_asesoria">Asesoramiento</a></li>
-                <li class="menu-link"><a href="/sugerencia">Sugerencias</a></li>
-            </ul>
-            <ul class="right-links">
-                <li class="menu-link"><a href="/registrar">Registrarse</a></li>
-                <li class="menu-link"><a href="#">Iniciar Sesión</a></li>
-            </ul>
-            <a href="javascript:void(0);" class="icon" >&#9776;</a>
-            -->
+            
         </nav>
         <div class="relleno"></div>
 
@@ -63,7 +48,7 @@
                         <p> Diseño y c&oacute;digo creados por Rafael Vasquez</p>
                     </div>
                     <div class="col-xs-6 col-sm-4 col-sm-offset-2 col-md-4 col-md-offset-2 col-lg-4 col-lg-offset-2 col-xl-4 col-xl-offset-2">
-                        <a href="/contacto" class="btn-contacto">Cont&aacute;ctanos</a>
+                        <a href="{% url 'solicitudes:contacto' %}" class="btn-contacto">Cont&aacute;ctanos</a>
                     </div>
                 </div>
             </div>
@@ -88,7 +73,7 @@ class="close" title="Close Modal">&times;</span>
 
                 <div class="row login-form">
                 <div class="col-md-12">
-                    <form action="/logmein/" method="POST" >
+                    <form action="{% url 'website:logmein' %}" method="POST" >
                         {% csrf_token %}
 
                         {% for field in loginf %}
@@ -98,18 +83,7 @@ class="close" title="Close Modal">&times;</span>
                                 {{ field.errors }}
                             </div>
                         {% endfor %}
-                        <!--
-                        <div class="form-group">
-                            <label>Nombre de Usuario</label>
-                            <input type="text" placeholder="Igrese su Usuario" class="form-control" name="username" required>
-                        </div>
-                        <div class="form-group">
-                            <label >Contraseña</label>
-                            <input type="password" placeholder="Igrese su contraseña" class="form-control" name="pass" required>
-                        </div>
                         
-                        {{ form.as_p }}
-                        -->
                         {% if loginf.non_field_errors %}
                             <ul class='form-errors'>
                                 {% for error in loginf.non_field_errors %}
@@ -124,9 +98,9 @@ class="close" title="Close Modal">&times;</span>
                         </div>
                     </form>
                  
-                    <a class="link-discreto" href="/password_reset">Olvide mi contraseña</a>
+                    <a class="link-discreto" href="{% url 'website:password_reset' %}">Olvide mi contraseña</a>
                  
-                    <a class="link-discreto" href="">Desbloquear mi cuenta</a>
+                    <a class="link-discreto" href="{% url 'website:desbloquear_email' %}">Desbloquear mi cuenta</a>
                 </div>
 </div>
             </div>

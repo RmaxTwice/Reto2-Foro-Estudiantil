@@ -1,0 +1,60 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block title %}Preguntas Secretas{% endblock %}
+
+{% block content %}
+
+	<h1> Desbloquear Cuenta </h1>
+	<div class="container main-container">
+		<div class="row login-form">
+            <div class="col-md-10 col-md-offset-1">
+                <h4>Intrucciones:</h4>
+                <p class="instrucciones">
+                    Por favor responda las preguntas secretas indicadas.
+                </p>
+                <br>
+                <form method="post" action="/desbloquear/">
+
+                    {% csrf_token %} 
+                    
+                    <label>Pregunta 1:</label>
+                    <p>{{ userinf.perfil.get_pregunta1_display }}</p>
+
+                    {{ preguntasf.respuesta1 }}
+
+                    <br>
+                    <label>Pregunta 2:</label>
+                    <p>{{ userinf.perfil.get_pregunta2_display }}</p>
+
+                    {{ preguntasf.respuesta2 }}
+                    <!--
+                    {% for field in preguntasf %}
+                        <div class="form-group">
+                            {{ field.label_tag }}<br>
+
+                            {% if field.errors %}
+                                <div class="form-errors">
+                                {% for error in field.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                    -->
+                   
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <button type="submit" class="btn btn-success btn-lg btn-block submit-btn">Siguiente</button>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+		</div>
+	</div>
+
+{% endblock %}

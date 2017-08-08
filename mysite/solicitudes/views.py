@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import Http404
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from .forms import ContactanosForm
 from .models import Solicitud
@@ -14,34 +14,34 @@ def contacto(request):
 			solicitud = cform.save(commit=False)
 			solicitud.tipo = 'Contacto'
 			solicitud.save()
-			return HttpResponseRedirect('/')
-		return HttpResponseRedirect('/contacto')
+			return redirect('website:home')
+		return redirect('solicitudes:contacto')
 	else:
 		contactof = ContactanosForm()
 		if request.user.is_authenticated:
 			if request.user.perfil.es_supervisor:
-				return render(request, 'solicitudes/contacto.html',{'base_template':'solicitudes/base_admin.html','contactof':contactof})
+				return render(request, 'solicitudes/contacto.html',{'base_template':'website/base_admin.html','contactof':contactof})
 			else:
-				return render(request, 'solicitudes/contacto.html',{'base_template':'solicitudes/base_usuario.html','contactof':contactof})
+				return render(request, 'solicitudes/contacto.html',{'base_template':'website/base_usuario.html','contactof':contactof})
 		else:			
 			loginf = LoginForm()	
-			return render(request, 'solicitudes/contacto.html', {'base_template':'solicitudes/base.html','loginf': loginf,'contactof':contactof})
+			return render(request, 'solicitudes/contacto.html', {'base_template':'website/base.html','loginf': loginf,'contactof':contactof})
 
 
 @login_required(login_url='/') 
 def pedir_asesoria(request):
 	 
 	if request.user.perfil.es_supervisor:
-		return render(request, 'solicitudes/pedir_asesoria.html',{'base_template':'solicitudes/base_admin.html'})
+		return render(request, 'solicitudes/pedir_asesoria.html',{'base_template':'website/base_admin.html'})
 	else:
-		return render(request, 'solicitudes/pedir_asesoria.html',{'base_template':'solicitudes/base_usuario.html'})
+		return render(request, 'solicitudes/pedir_asesoria.html',{'base_template':'website/base_usuario.html'})
 
 @login_required(login_url='/') 
 def sugerencia(request):
 	if request.user.perfil.es_supervisor:
-		return render(request, 'solicitudes/sugerencia.html',{'base_template':'solicitudes/base_admin.html'})
+		return render(request, 'solicitudes/sugerencia.html',{'base_template':'website/base_admin.html'})
 	else:
-		return render(request, 'solicitudes/sugerencia.html',{'base_template':'solicitudes/base_usuario.html'})
+		return render(request, 'solicitudes/sugerencia.html',{'base_template':'website/base_usuario.html'})
 
 @login_required(login_url='/')
 def solicitud_detalle(request,id_sol):
@@ -70,7 +70,7 @@ def solicitud_reservar(request,id_sol):
 			# y alteramos su estado.
 		solicitud.estado = 'Pendiente'
 		solicitud.save()
-		return HttpResponseRedirect('/administrar_solicitudes')
+		return redirect('solicitudes:admin')
 		#return render(request, 'solicitudes/solicitud_detalle.html', {'solicitud':solicitud})
 	
 	raise Http404("Esta página no existe")
@@ -89,7 +89,7 @@ def solicitud_liberar(request,id_sol):
 			# y alteramos su estado.
 		solicitud.estado = 'Libre'
 		solicitud.save()
-		return HttpResponseRedirect('/administrar_solicitudes')
+		return redirect('solicitudes:admin')
 		#return render(request, 'solicitudes/solicitud_detalle.html', {'solicitud':solicitud})
 	
 	raise Http404("Esta página no existe")
@@ -105,7 +105,7 @@ def solicitud_completa(request,id_sol):
 			# y alteramos su estado.
 		solicitud.estado = 'Atendida'
 		solicitud.save()
-		return HttpResponseRedirect('/administrar_solicitudes')
+		return redirect('solicitudes:admin')
 		#return render(request, 'solicitudes/solicitud_detalle.html', {'solicitud':solicitud})
 	
 	raise Http404("Esta página no existe")

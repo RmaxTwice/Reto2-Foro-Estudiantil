@@ -12,7 +12,7 @@
 			<div class="row login-form">
                 <div class="col-md-10 col-md-offset-1">
 
-                    <form method="post" action="/registrar/">
+                    <form method="post">
 
                         {% csrf_token %} 
 
@@ -70,10 +70,6 @@
                             </ul>
                         {% endif %}
 
-<!--
-{{ registeruserform.as_p }}
-{{ registerperfilform.as_p }}
--->
                         <div class="row">
                             <div class="col-md-8 col-md-offset-2">
                                 <button type="submit" class="btn btn-success btn-lg btn-block submit-btn">Registrar</button>

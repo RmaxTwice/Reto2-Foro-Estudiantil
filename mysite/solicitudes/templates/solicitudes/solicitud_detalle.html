@@ -6,72 +6,74 @@
 {% block content %}
 	
 	<div class="jumbotron container">
+
 		{% if solicitud.tipo == 'Contacto' %}
-		<h2 class="text-center">Solicitud de Contacto</h2>
-		<hr>
-		<div class="row">
-			<div class="col-md-3 col-md-offset-1">
-				<label>Nombre:</label>
-				<p>{{ solicitud.nombre }}</p>
-			</div>
-			<div class="col-md-3 col-md-offset-1">
+			<h2 class="text-center">Solicitud de Contacto</h2>
+			<hr>
+			<div class="row">
+				<div class="col-md-3 col-md-offset-1">
+					<label>Nombre:</label>
+					<p>{{ solicitud.nombre }}</p>
+				</div>
+				<div class="col-md-3 col-md-offset-1">
 
-				<label>Teléfono:</label>
-				{% if solicitud.telefono %}
-					<p>{{ solicitud.telefono }}</p>
-				{% else %}
-					<p>Ninguno</p>
-				{% endif %}
-				
+					<label>Teléfono:</label>
+					{% if solicitud.telefono %}
+						<p>{{ solicitud.telefono }}</p>
+					{% else %}
+						<p>Ninguno</p>
+					{% endif %}
+					
+				</div>
+				<div class="col-md-4">
+					<label>Correo Eletrónico:</label>
+					<p>{{ solicitud.email }}</p>
+				</div>
 			</div>
-			<div class="col-md-4">
-				<label>Correo Eletrónico:</label>
-				<p>{{ solicitud.email }}</p>
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
+					<label>Título:</label>
+					<p>{{ solicitud.titulo }}</p>
+					<label>Mensaje:</label>
+					<p>{{ solicitud.cuerpo }}</p>
+				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
-				<label>Título:</label>
-				<p>{{ solicitud.titulo }}</p>
-				<label>Mensaje:</label>
-				<p>{{ solicitud.cuerpo }}</p>
-			</div>
-		</div>
-
 		{% endif %}
+
 		<div class="relleno"></div>
 
-			<div class="row">
-				{% if solicitud.estado == 'Libre' %}
-					<form class="col-md-6" action="reservar">
-						<div class="col-md-8 col-md-offset-2">
-		                   <button type="submit" class="btn btn-success btn-lg btn-block submit-btn">Reservar <i class="fa fa-lock" style="font-size:24px"></i></button>
-		                </div>
+		<div class="row">
 
-					</form>
-					<form class="col-md-6">
-						<div class="col-md-8 col-md-offset-2">
-		                   <button type="submit" disabled class="btn btn-info btn-lg btn-block submit-btn">Atentida <i class="fa fa-check-circle" style="font-size:24px"></i></button>
-		                </div>
-					</form>
-				{% elif solicitud.estado == 'Pendiente'%}
-					<form class="col-md-6" action="liberar">
-						<div class="col-md-8 col-md-offset-2">
-		                   <button type="submit" class="btn btn-primary btn-lg btn-block submit-btn">Liberar <i class="fa fa-unlock" style="font-size:24px"></i></button>
-		                </div>
-
-					</form>
-					<form class="col-md-6" action="completa">
-						<div class="col-md-8 col-md-offset-2">
-		                   <button type="submit" class="btn btn-info btn-lg btn-block submit-btn">Atentida <i class="fa fa-check-circle" style="font-size:24px"></i></button>
-		                </div>
-					</form>
-				{% else %}
+			{% if solicitud.estado == 'Libre' %}
+				<form class="col-md-6" action="{% url 'solicitudes:solicitud_reservar' solicitud.id %}">
 					<div class="col-md-8 col-md-offset-2">
-						<h3 class="text-center" style = "color: red;">Esta solicitud ya ha sido atendida.</h3>
-					</div>
-				{% endif %}
-			</div>
+	                   <button type="submit" class="btn btn-success btn-lg btn-block submit-btn">Reservar <i class="fa fa-lock" style="font-size:24px"></i></button>
+	                </div>
+
+				</form>
+				<form class="col-md-6">
+					<div class="col-md-8 col-md-offset-2">
+	                   <button type="submit" disabled class="btn btn-info btn-lg btn-block submit-btn">Atentida <i class="fa fa-check-circle" style="font-size:24px"></i></button>
+	                </div>
+				</form>
+			{% elif solicitud.estado == 'Pendiente'%}
+				<form class="col-md-6" action="{% url 'solicitudes:solicitud_liberar' solicitud.id %}">
+					<div class="col-md-8 col-md-offset-2">
+	                   <button type="submit" class="btn btn-primary btn-lg btn-block submit-btn">Liberar <i class="fa fa-unlock" style="font-size:24px"></i></button>
+	                </div>
+
+				</form>
+				<form class="col-md-6" action="{% url 'solicitudes:solicitud_completa' solicitud.id %}">
+					<div class="col-md-8 col-md-offset-2">
+	                   <button type="submit" class="btn btn-info btn-lg btn-block submit-btn">Atentida <i class="fa fa-check-circle" style="font-size:24px"></i></button>
+	                </div>
+				</form>
+			{% else %}
+				<div class="col-md-8 col-md-offset-2">
+					<h3 class="text-center" style = "color: red;">Esta solicitud ya ha sido atendida.</h3>
+				</div>
+			{% endif %}
+		</div>
 		
 
 	</div>

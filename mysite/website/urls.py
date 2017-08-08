@@ -1,10 +1,12 @@
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls import url
+from django.views.generic import TemplateView
 from django.views.static import serve
+
 from . import views
 
-
+app_name = 'website'
 urlpatterns = [
     url(r'^$', views.index, name='home'),
     url(r'^registrar/$', views.registrar, name='registrar'),
@@ -17,10 +19,14 @@ urlpatterns = [
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         auth_views.password_reset_confirm, name='password_reset_confirm'),
     url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
-    url(r'^desbloqueo/$', views.desbloquear_cuenta, name='desbloquear_cuenta'),
+  #  url(r'^desbloqueo/$', views.desbloquear_cuenta, name='desbloquear_cuenta'),
     url(r'^perfil/$', views.perfil, name='ver_perfil'),
     url(r'^perfil/editar$', views.perfil_editar, name='editar_perfil'),
-    
+    url(r'^opciones/$', views.opciones, name='opciones_perfil'),
+    url(r'^opciones/password/$', views.password, name='cambiar_password'),
+    url(r'^desbloquear/$', views.indicar_email, name='desbloquear_email'),
+    url(r'^desbloquear/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        views.desbloquear_cuenta.as_view(), name='activate_account'),
 ]
 
 # URL para servir las imagenes de forma local durante debug.

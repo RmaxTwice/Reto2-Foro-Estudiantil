@@ -45,11 +45,22 @@ class RecuperarPassForm(forms.Form):
 
 	email = forms.EmailField(label="Correo Electrónico", max_length=254, required=True)
 
-	def clean(self):
+	def clean_email(self):
 		em = self.cleaned_data.get('email')
-		if not User.objects.filter(email=ema).exists():
+		if not User.objects.filter(email=em).exists():
 			raise forms.ValidationError( _("Este correo electrónico no esta en uso."),code='email_not_used')
 		return em
+
+# Formulario para responder preguntas de seguridad.
+class PreguntasSecretasForm(forms.Form):
+
+	def __init__(self, *args, **kwargs):
+		super(PreguntasSecretasForm, self).__init__(*args, **kwargs)
+		self.fields['respuesta1'].widget = forms.TextInput(attrs={'class':'form-control','placeholder':'Respuesta 1'})
+		self.fields['respuesta2'].widget = forms.TextInput(attrs={'class':'form-control','placeholder':'Respuesta 2'})
+
+	respuesta1 = forms.CharField(label="Respuesta 1", max_length=100, required=True)
+	respuesta2 = forms.CharField(label="Respuesta 2", max_length=100, required=True)
 
 # Formulario para iniciar sesión.
 class LoginForm(forms.Form):

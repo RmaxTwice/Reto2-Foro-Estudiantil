@@ -25,7 +25,7 @@
 						{% else %}
 							<button type="button" disabled class="btn btn-warning btn-block btn-lg">Desconectarse de <i class="fa fa-facebook-square" style="font-size:24px"></i>acebook</button>
 							<br>
-							<p style="color: red; font-size: 18px;" class="text-center">Debes <a href="{% url 'password' %}">definir una contraseña</a> para tu cuenta antes de desconectarte de Facebook</p>
+							<p style="color: red; font-size: 18px;" class="text-center">Debes <a href="{% url 'website:cambiar_password' %}">definir una contraseña</a> para tu cuenta antes de desconectarte de Facebook</p>
 						{% endif %}
 				{% else %}
 					<a href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary btn-block btn-lg outline">Conectarse a Facebook <i class="fa fa-facebook-square" style="font-size:24px"></i></a>

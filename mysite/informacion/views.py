@@ -7,6 +7,6 @@ from django.shortcuts import render
 @login_required(login_url='/') 
 def informacion(request):
 	if request.user.perfil.es_supervisor:
-		return render(request, 'informacion/informacion.html',{'base_template':'informacion/base_admin.html'})
+		return render(request, 'informacion/informacion.html',{'base_template':'website/base_admin.html'})
 	else:
-		return render(request, 'informacion/informacion.html',{'base_template':'informacion/base_usuario.html'})
+		return render(request, 'informacion/informacion.html',{'base_template':'website/base_usuario.html'})

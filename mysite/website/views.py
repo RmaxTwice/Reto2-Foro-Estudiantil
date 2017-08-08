@@ -5,14 +5,17 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django.db import connection, transaction
-from django.forms.models import inlineformset_factory
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponse
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.template import RequestContext, loader
 from django.template.loader import render_to_string
+from django.utils.encoding import force_text
+from django.utils.http import urlsafe_base64_decode
+from django.views import View
 from social_django.models import UserSocialAuth
-from .forms import LoginForm, CambiarPassForm, DefinirPassForm, RegisterPerfilForm, RegisterUserForm, RecuperarPassForm, EditarUserForm, EditarPerfilForm
+from .forms import LoginForm, CambiarPassForm, DefinirPassForm, RegisterPerfilForm, RegisterUserForm, RecuperarPassForm, EditarUserForm, EditarPerfilForm, PreguntasSecretasForm
 from .models import Perfil
+from .tokens import account_unlock_token
 
 
 
@@ -36,17 +39,16 @@ def logmein(request):
 		user = form.login(request)
 		if user:
 			login(request, user)
-			return HttpResponseRedirect('/')
+			return redirect('website:home')
 	return render(request, 'website/index_noauth.html', {'loginf': form })
 
-	
+
 # View para cerrar la sesión de usuarios
 def logmeout(request):
 	logout(request)
-	return HttpResponseRedirect('/')
+	return redirect('website:home')
 
 
-	return render(request, 'website/index_noauth.html')
 
 # Vista que se encarga de el manejo de la edicion de los perfiles de usuario.
 @login_required(login_url='/') 
@@ -58,7 +60,7 @@ def perfil_editar(request):
 		if uf.is_valid() * pf.is_valid():
 			uf.save()
 			pf.save()
-		return HttpResponseRedirect('/perfil')
+		return redirect('website:ver_perfil')
 
 	user_form =	EditarUserForm(instance=request.user,prefix='user')
 	perfil_form = EditarPerfilForm(instance=request.user.perfil,prefix='perfil')
@@ -102,7 +104,7 @@ def registrar(request):
 					)
 
 			
-			return HttpResponseRedirect('/')
+			return redirect('website:home')
 		else:
 			return render(request,'website/registrar.html', {'registeruserform':ruf, 'registerperfilform':rpf,'loginf': loginf})
 	else:
@@ -114,22 +116,40 @@ def registrar(request):
 
 		return render(request, 'website/registrar.html', {'registeruserform':ruf, 'registerperfilform':rpf,'loginf': loginf})
 
-def recuperar_pass(request):
+# Vista para tomar el email del usuario y si existe buscar sus preguntas secretas en la base de datos
+def indicar_email(request):
+	loginf = LoginForm()
 
 	if request.method == 'POST':
-		recuperarf = RecuperarPassForm(request.POST or None)
-		if recuperarf.is_valid():
-			print (recuperarf.email)	
-		return HttpResponseRedirect('/')
-	loginf = LoginForm()
-	recuperarf = RecuperarPassForm()
-	return render(request, 'website/recuperar_contraseña.html', {'recuperarf':recuperarf, 'loginf':loginf})
+		emailform = RecuperarPassForm(request.POST or None)
+		if emailform.is_valid():
+			#Si el usuario es valido se procede a redibujar la pagina con las preguntas secretas correspondientes
+			preguntasf = PreguntasSecretasForm()
+			user = User.objects.get(email=emailform.cleaned_data['email'])
+			
+			return render(request, 'website/desbloquear_preguntas.html', {'userinf': user,'preguntasf':preguntasf, 'loginf':loginf})
+		else:
+			# Si no es un email valido se le indica al usuario.
+			return render(request, 'website/indicar_email.html', {'emailf':emailform, 'loginf':loginf})
+	
+	emailform = RecuperarPassForm()
+	return render(request, 'website/indicar_email.html', {'emailf':emailform, 'loginf':loginf})
 
-def desbloquear_cuenta(request):
-	user = request.user
-	user.perfil.esta_bloqueado = False
-	user.save()
-	return HttpResponseRedirect('/')
+class desbloquear_cuenta(View):
+
+    def get(self, request, uidb64, token):
+        try:
+            uid = force_text(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
+
+        if user is not None and account_unlock_token.check_token(user, token):
+            login(request, user)
+            return redirect('website:cambiar_password')
+        else:
+            # invalid link
+            return render(request, 'registration/invalid.html')
 
 	
 @login_required(login_url='/') 
@@ -187,9 +207,9 @@ def password(request):
 			form.save()
 			update_session_auth_hash(request, form.user)
 
-			#Envio de email con las nuevas credenciales al correo electrónico del usuario
+				#Envio de email con las nuevas credenciales al correo electrónico del usuario
 			user = User.objects.get(pk=request.user.id)
-
+			userprofile = Perfil.objects.get(user = user)
 			context = {'username': user.username ,'password':form.cleaned_data['new_password1']}
 			
 			msg_plain = render_to_string('registration/user_pwdreset_email.txt', context)
@@ -203,8 +223,11 @@ def password(request):
 					html_message=msg_html,						#mensaje en html
 					)
 
+				# Nos aseguramos siempre de desbloquar a un usuario despues de el cambio de contraseña
+			userprofile.esta_bloqueado = False
+			userprofile.save()
 
-			return redirect('/opciones')
+			return redirect('website:opciones_perfil')
 	else:
 		form = PasswordForm(request.user)
 
